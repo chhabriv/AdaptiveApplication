@@ -1,6 +1,6 @@
 # AdaptiveApplication
 
-# Team - Lively
+# Team Name: Lively
 
 # Description
 Repository for maintaining code and documentation for the proposed adaptive application
