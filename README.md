@@ -1,9 +1,9 @@
 # AdaptiveApplication
 
+# Team - Lively
+
 # Description
 Repository for maintaining code and documentation for the proposed adaptive application
-
-# Team Name: Lively
 
 # Team Members:
 1) Ashwin
