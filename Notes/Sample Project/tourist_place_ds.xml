@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<places>
+   <place category="Landmark">
+      <name>Trinity College Dublin</name>
+      <hours>
+         <opening>0900</opening>
+         <closing>1700</closing>
+      </hours>
+      <geoLocation>
+         <longitude>53.350027</longitude>
+         <latitude>-6.260255</latitude>
+      </geoLocation>
+      <duration>140</duration>
+      <price>14.00</price>
+      <ageSuitability>All</ageSuitability>
+      <bestTimeToVisit>
+         <day>Evening</day>
+         <season>Summer</season>
+      </bestTimeToVisit>
+      <review />
+   </place>
+   <place category="Nature-Park">
+      <name>Dublin Zoo</name>
+      <hours>
+         <opening>0930</opening>
+         <closing>1800</closing>
+      </hours>
+      <geoLocation>
+         <longitude>53.3562</longitude>
+         <latitude>-6.3053</latitude>
+      </geoLocation>
+      <duration>120</duration>
+      <price>19.50</price>
+      <ageSuitability>All</ageSuitability>
+      <bestTimeToVisit>
+         <day>Afternoon</day>
+         <season>Summer</season>
+      </bestTimeToVisit>
+      <review />
+   </place>
+</places>
