@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Review | {{session.username}}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col s12">
+		<h2 class="center-align">Review Past Attractions</h2>
+		
+		<table class="responsive-table">
+			<thead>
+				<tr>
+					<th>Date Visited</th>
+					<th>Attraction Name</th>
+					<th>Description</th>
+					<th>Write a Review</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+				<tr>
+					<td>{{ item.date }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.description }}</td>
+					<td><a class="waves-effect waves-light btn" href="/write-review/{{ loop.index }}">Review</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% if error %}
+	<p class=error style="color:red"> {{ error }} </p>
+{% endif %}
+{% if success %}
+	<p class=error style="color:green"> {{ success }} </p>
+{% endif %}
+{% if review == 1 %}
+	<div class="row">
+		<div class="col s12">
+			<h4>Review for {{ attraction_name }}</h4>
+			<form action="/create-review" method="post">
+				<input type="hidden" name="attraction_name" value="{{ attraction_name }}">
+				<h6>Title</h6>
+				{{ form.title }}<br>
+				<h6>Review</h6>
+				{{ form.body }}<br />
+	            <button class="btn waves-effect waves-light" type="submit">Submit<i class="material-icons right">send</i></button>
+			</form>
+		</div>
+	</div>
+{% endif %}
+{% endblock %}

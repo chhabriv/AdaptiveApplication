@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}My Trip | {{session.username}}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col s12">
+		<h2>Welcome, {{session.name}}.</h2>
+		<p class="text-align">
+			Here is your current itinerary.
+		</p>
+		<h4 class="center-align">Itinerary</h4>
+		<table class="responsive-table centered">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Name</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+				<tr>
+					<td>{{ item.date }}</td>
+					<td>{{ item.start_time }} - {{ item.end_time }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.price }}</td>
+					<td><a class="waves-effect waves-light btn" href="/remove-from-trip/{{ item.id }}">Remove</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<hr/>
+		<h5>Total Cost:</h5>
+		<p style="color: green">{{ total_cost }}</p>
+		<a class="waves-effect waves-light btn" href="/complete">Complete Trip</a>
+	</div>
+</div>
+{% endblock %}
