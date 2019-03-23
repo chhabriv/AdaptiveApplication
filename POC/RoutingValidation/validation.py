@@ -50,7 +50,7 @@ def getRecommendedTimeSpent(object):
     return int(object['Duration'])
 
 
-def getTotalDurationDistance(data, attractions):
+def getTotalCostTime(data, attractions):
     routes = data['routes']
     totalTravelTime = 0
     totalAttractionTime = 0
@@ -85,8 +85,8 @@ with open('objects.csv', 'r') as objectsCsv:
         attractions.append({
             'Category': row[1],
             'Name': row[2],
-            'OpeningHours': row[3],
-            'ClosingHours': row[4],
+            'OpeningHours': int(row[3]),
+            'ClosingHours': int(row[4]),
             'Latitude': row[5],
             'Longitude': row[6],
             'Duration': row[7],
@@ -107,7 +107,7 @@ while (1):
         r = requests.get(url, params=params)
         data = json.loads(r.text)
         print(data)
-        totalCostTime += getTotalDurationDistance(data, attractions)
+        totalCostTime += getTotalCostTime(data, attractions)
         i = i +2
         continue
     if( i + 2 == len(attractions) - 2):
@@ -124,3 +124,35 @@ while (1):
 
 
 print(totalCostTime)
+
+def getLatestOpeningHour(attractions):
+    max = 0
+    for attr in attractions:
+        tmp = attr['OpeningHours']
+        if (max < tmp):
+            max = tmp
+    return max
+
+
+def getEarlistClosingHour(attractions):
+    min = 2359
+    for attr in attractions:
+        tmp = attr['ClosingHours']
+        if (min > tmp):
+            min = tmp
+    return min
+
+print(getLatestOpeningHour(attractions))
+print(getEarlistClosingHour(attractions))
+
+def validation(totalCostTime, attractions):
+    hour = round(totalCostTime/60)
+    min = round((totalCostTime%60))*0.6
+    tmp = hour*100 + min
+    if (getLatestOpeningHour(attractions) + tmp <= getEarlistClosingHour(attractions)):
+        return "The Trip is Valid"
+    else:
+        return "Not enough time to finish the trip"
+
+
+print(validation(totalCostTime, attractions))
