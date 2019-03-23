@@ -15,9 +15,12 @@ waypoint    -> afternoon/late morning attraction
 destination -> evening attraction.
 
 
-3. ToDo: Add more waypoints
-    Starting place: attraction with latest opening hours
-    Final place: attraction with earliest closing time 
+3. Done: Add more waypoints -> seems like in python only can add one waypoint (from my research)
+                            -> separate the trip as multiple ones with three points each and add up the duration plus transit
+    
+        Validation done using   
+        -> Starting place: attraction with latest opening hours
+        -> Final place: attraction with earliest closing time 
 
 '''
 
