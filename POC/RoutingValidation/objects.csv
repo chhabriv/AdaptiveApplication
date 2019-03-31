@@ -1,5 +1,5 @@
-2	Landmark	Trinity College	900	1700	53.343986	-6.254572	90	14	All	Morning	Summer	4.5	Walk	Walk
-41	Bar	Jameson Distillery Bow St.	1000	1730	53.3484	-6.2774	40	20	All	All	All	4.5	Public Transportation	Public Transportation
-11	Nature/Park	St. Stephen's Green	800	2359	53.3382	-6.2591	30	0	All	Afternoon	Summer	4.8	Public Transportation	Public Transportation
-18	Nature/Park	Dublin Zoo	930	1800	53.3562	-6.3053	120	19.5	All	Afternoon	Summer	4.1	Public Transportation	Public Transportation
-19	Nature/Park	Howth	800	2359	53.3786	-6.057	300	0	All	Afternoon	Summer	4.6	Public Transportation	Public Transportation
+7,Landmark,Trinity College,900,1700,53.343986,-6.254572,90,14,All,Morning,Summer,4.5,Walk,Walk
+2,Bar,Jameson Distillery Bow St.,1000,1730,53.3484,-6.2774,40,20,All,All,All,4.5,Public Transportation,Public Transportation
+16,Nature/Park,St. Stephen's Green,800,2359,53.3382,-6.2591,30,0,All,Afternoon,Summer,4.8,Public Transportation,Public Transportation
+23,Nature/Park,Dublin Zoo,930,1800,53.3562,-6.3053,120,19.5,All,Afternoon,Summer,4.1,Public Transportation,Public Transportation
+24,Nature/Park,Howth,800,2359,53.3786,-6.057,300,0,All,Afternoon,Summer,4.6,Public Transportation,Public Transportation
