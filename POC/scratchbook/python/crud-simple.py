@@ -139,10 +139,10 @@ deleteOne = collection.delete_one(query)
 print("is the record deleted ?",deleteOne.acknowledged)
 
 
-deleteMany = collection.delete_many({})
+#deleteMany = collection.delete_many({})
 
-print("Number of records deleted ?",deleteMany.deleted_count)
+#print("Number of records deleted ?",deleteMany.deleted_count)
 
-collection.drop()
+#collection.drop()
 
 print(db.list_collection_names())

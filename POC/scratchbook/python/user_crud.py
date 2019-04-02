@@ -66,7 +66,11 @@ def updateWeightsByJson(userId,categoryWeights):
     print("invoked")
     catWeights = json.loads(categoryWeights)
     #print(catWeights['nature'])
-    incStr = {"$inc":{"categories.landmark":catWeights['landmark'],"categories.nature":catWeights['nature'],"categories.shopping":catWeights['shopping'], "categories.theatre":catWeights['theatre'],"categories.restaurant":catWeights['restaurant']}}
+    incStr = {"$inc":{"categories.landmark":catWeights['landmark'],
+                      "categories.nature":catWeights['nature'],
+                      "categories.shopping":catWeights['shopping'], 
+                      "categories.theatre":catWeights['theatre'],
+                      "categories.restaurant":catWeights['restaurant']}}
     #incStr = '''{"$inc":{"'''
     #for key,value in catWeights.items():
         #print (key,value)
