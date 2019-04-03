@@ -4,9 +4,12 @@ Created on Mon Mar 25 12:20:43 2019
 
 @author: user
 """
+
 from mongoconnection import MongoConnection
 from random import randint
 import json
+
+
 
 def insertUser(name,age,gender,budget=0,duration=0,visited={},prefCategories=""):
     landmark=nature=shopping=theatre=restaurant = 0
