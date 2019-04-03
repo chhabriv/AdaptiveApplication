@@ -1,0 +1,7 @@
+Download Mongo DB community edition from MongoDB website https://www.mongodb.com/download-center/community as per your OS.
+
+Installation and running guidelines:-
+
+https://docs.mongodb.com/guides/server/install
+
+
