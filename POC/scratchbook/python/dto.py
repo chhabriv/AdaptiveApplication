@@ -17,16 +17,18 @@ class user(Document):
     age = IntField(required=True, max_length=2)
     gender = StringField(required=True, max_length=6)    
     budget = IntField(required=True, max_length=10)
-    category = EmbeddedDocumentField(category_weights)
+    category = DictField(max_length=5)
     duration = IntField(required=True, max_length=10)
-    is_first= BooleanField(required=True, max_length=10)
+#    is_first= BooleanField(required=True, max_length=10)
 
-class category_weights(EmbeddedDocument):
-    landmark = IntField(required=True, max_length=10)
-    nature = IntField(required=True, max_length=10)
-    shopping = IntField(required=True, max_length=10)
-    restaurant = IntField(required=True, max_length=10)
-    theater = IntField(required=True, max_length=10)
+# =============================================================================
+# class category_weights(EmbeddedDocument):
+#     landmark = IntField(required=True, max_length=10)
+#     nature = IntField(required=True, max_length=10)
+#     shopping = IntField(required=True, max_length=10)
+#     restaurant = IntField(required=True, max_length=10)
+#     theater = IntField(required=True, max_length=10)
+# =============================================================================
 
 class category(Document):
     category=StringField(required=True, max_length=15)
@@ -35,11 +37,10 @@ class category(Document):
 #to put in another file
 
 
-User1.save()
+#User1.save()
 
 print(user.name)
 
-User2=user.objects.get(id='5ca3ebdab3baf13518d185e2')
 user2=User2.to_json()
 user3=json.loads(user2)
 user2

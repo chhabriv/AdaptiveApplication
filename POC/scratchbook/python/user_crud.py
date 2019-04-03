@@ -8,8 +8,19 @@ Created on Mon Mar 25 12:20:43 2019
 from mongoconnection import MongoConnection
 from random import randint
 import json
+import dto
 
+def insert_user(user):
+    return user.save()
 
+def retrieve_user(user_id):
+    return dto.user.objects.get(id=user_id)
+
+def update_user(user_id,weight,new_budget,new_duration):
+    return dto.user.objects(id=user_id).update(
+            category=weight,
+            duration=new_duration,
+            budget=new_budget)
 
 def insertUser(name,age,gender,budget=0,duration=0,visited={},prefCategories=""):
     landmark=nature=shopping=theatre=restaurant = 0

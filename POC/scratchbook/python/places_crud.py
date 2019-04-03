@@ -10,6 +10,7 @@ import user_crud as user
 import random 
 import json
 
+
 def fetchPlacesbyCategoriesDuration(categories,duration):
     catArr = categories.lower().split(",")
     inQry = { "category": { "$in": catArr } }
