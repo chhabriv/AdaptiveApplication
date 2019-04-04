@@ -1,114 +1,51 @@
-<!--
-  Generated template for the SignupPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box}
+<head>
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
+<title>Leaflet Example 3: Interactive Geojson</title>
+<meta charset="utf-8">
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-button:hover {
-  opacity:1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 50%;
-}
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .signupbtn {
-     width: 100%;
-  }
-}
-</style>
-
+<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+<link rel="stylesheet" href="style/style.css">
+</head>
 <body>
-<script src="Login.js"></script>
-<h2>Existing Users</h2>
 
-<form id = "form" onsubmit="return false;">
-  UserId:<br>
-  <input type="text" id="UserId" value="">
-  <br>
-  Age:<br>
-  Budget: Choose from $ to $$$<br>
-  <input type="text" id="Budget" value="">
-  <br>
-  Duration of the trip: 6h or 12h <br>
-  <input type="text" id="Duration" value="">
-  <br>
+  <form id = "form" onsubmit="return false;">
+    UserId:<br>
+    <input type="text" id="UserId" value="">
+    <br>
+    Age:<br>
+    Budget: Choose from $ to $$$<br>
+    <input type="text" id="Budget" value="">
+    <br>
+    Duration of the trip: 6h or 12h <br>
+    <input type="text" id="Duration" value="">
+    <br>
 
-  Preference(Optional):<br>
-  Please choose minumun 1 and maximum 3 of the listed tags <br>
-  1.  outdoor  2.   museum   3. historic    4.  park     5.   lake<br>
-  6.  food     7.   pubs     8. play        9.  movie    10.  styling<br>
-  11. sttire   12.  shoes<br>
-  Enter the number of tags below <br>
-  <input type="text" id="tag1" value="0">
-  <input type="text" id="tag2" value="0">
-  <input type="text" id="tag3" value="0">
-  <br><br>
-  <button id="submit" >Submit</button>
+    Preference(Optional):<br>
+    Please choose minumun 1 and maximum 3 of the listed tags <br>
+    1.  outdoor  2.   museum   3. historic    4.  park     5.   lake<br>
+    6.  food     7.   pubs     8. play        9.  movie    10.  styling<br>
+    11. sttire   12.  shoes<br>
+    Enter the number of tags below <br>
+    <input type="text" id="tag1" value="0">
+    <input type="text" id="tag2" value="0">
+    <input type="text" id="tag3" value="0">
+    <br><br>
+    <button id="submit" >Submit</button>
 
-</form>
+  </form>
 
+
+
+
+<div id="map" style="visibity:hidden;width:0px;height:0px;"></div>
+<button class="btn" id="startBtn">Start plan</button>
+<button class="btn" id="nextBtn">Next Attraction</button>
+<button class="btn" id="newUser">Next Attraction</button>
+<script src="bundle.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </body>
 </html>
