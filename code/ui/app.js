@@ -264,7 +264,7 @@ function drawPolyline(jsonData){
     var preference = getPre();
     var duration = getDuration();
     var budget = getBudget();
-    let returnJson = '{\"userid\":'+ userid+'\"duration\":'+duration+'\"budget\":'+budegt + '\"tag1\":'+preference[0]+'\"tag2\":'+preference[1]+'\"tag3\":'+preference[2]+'}';
+    let returnJson = '{\"userid\":'+ userid+',\"username\":\"null\",\"age\":0,\"gender\":\"null\",\"duration\":'+duration+',\"budget\":'+budegt +',\"tag\":['+preference[0]+','+preference[1]+','+preference[2]+']}';
     console.log(returnJson);
     var axiosConfig = {
         headers: {
@@ -287,7 +287,7 @@ function drawPolyline(jsonData){
       var preference = getPre();
       var duration = getDuration();
       var budget = getBudget();
-      let returnJson = '{\"username\":'+ username+'\"age\":'+age+'\"gender\":'+gender+'\"duration\":'+duration+'\"budget\":'+budegt + '\"tag1\":'+preference[0]+'\"tag2\":'+preference[1]+'\"tag3\":'+preference[2]+'}';
+      let returnJson = '{\"userid\":\"null\"'+',\"username\":'+ username+',\"age\":'+age+',\"gender\":'+gender+',\"duration\":'+duration+',\"budget\":'+budegt + ',\"tag\":['+preference[0]+','+preference[1]+','+preference[2]+']}';
       console.log(returnJson);
       var axiosConfig = {
           headers: {
