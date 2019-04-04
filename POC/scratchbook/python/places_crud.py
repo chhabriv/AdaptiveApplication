@@ -92,6 +92,28 @@ def limitPlacesByCategories(locations,category,limit):
     #print([aLoc['name'] for aLoc in validLocations])    
     return validLocations
 
+
+
+def fetchPlacesByCategoriesBudget(categories,budget):
+    query = dict()
+    query["category"] = { "$in": categories }
+    query["Price"] = {"$lte":20}
+    print(query)
+    dbConn = MongoConnection()
+    places_coll = dbConn.getPlacesCollection()
+    
+    places = places_coll.find(query)
+    
+    locations = []
+    
+    if(places):
+        for aPlace in places:
+            locations.append(aPlace)
+    return shuffleList(locations)
+
+
+
+
 def main():
     #fetchPlacesbyCategoriesDuration("landmark,nature",100)
     userId= 7883

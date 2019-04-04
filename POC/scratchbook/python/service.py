@@ -103,10 +103,34 @@ def retrieve_user(user_id):
 def update_user(user_id,updated_weights,chosen_duration,chosen_budget):
     return user_crud.update_user(user_id,updated_weights,chosen_duration,chosen_budget)
     
-def preferred_places(raw_places,weights,duration):
-    recommended=[]
-    #TO BE FILLED
-    return recommended
+def preferred_places(raw_places,cat_weights,duration):
+	validLocations = []
+	total_weight = sum(cat_weights[cat] for cat in cat_weights)
+	for aCat in cat_weights.keys():
+		available_duration = catWeights[aCat]/total_weight*duration*60
+        print("the available duration for ",aCat," is ",available_duration)
+        validLocations.extend(limitPlacesByCategoryDuration(raw_places,aCat,available_duration))
+	return validLocations
+        
+
+
+
+def limitPlacesByCategoryDuration(locations,category_name,duration):
+    validLocations= []
+    currDuration = 0
+    if(duration==currDuration):
+        return validLocations
+    #print(places.count())
+    for aLoc in locations:
+        #print(aLoc['name'],aLoc['duration'])
+        if(aLoc['category']==category_name):
+            if((currDuration + aLoc['duration']) <= duration):
+                currDuration += aLoc['duration']
+                data = aLoc['name'] +"--"+ str(aLoc['duration'])
+                validLocations.append(data)
+    print(validLocations)
+    return validLocations 
+
 
 #Testing code below
 category_weights= tags_to_category(['shoes','movie','outdoor'])

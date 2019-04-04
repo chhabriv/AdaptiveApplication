@@ -99,7 +99,39 @@ def updateWeightsByJson(userId,categoryWeights):
         print("Weights updated successfully")
     return row.acknowledged
     
-    
+
+
+def fetchCategoryWeightsForSimilarUsers(age,gender,avgBudget,avgDuration):
+    age = 60
+    avgBudget = '2'
+    avgDuration = '6'
+    gender = 'M'
+
+
+    match_query = {"$match":{"age":{"$gte":age-5,"$lte":age+5},"gender":gender,
+                             "avgBudget":avgBudget,"avgDuration":avgDuration}}
+    group_query = {"$group":{"_id":0,"landmark":{"$avg":"$categories.landmark"},
+                             "nature":{"$avg":"$categories.nature"},
+                             "restaurant":{"$avg":"$categories.restaurant"},
+                             "shopping":{"$avg":"$categories.shopping"},
+                             "theatre":{"$avg":"$categories.theatre"}}}
+    project_query = {"$project":{"_id":0,"landmark":{"$ceil":"$landmark"},
+                             "nature":{"$ceil":"$nature"},
+                             "restaurant":{"$ceil":"$restaurant"},
+                             "shopping":{"$ceil":"$shopping"},
+                             "theatre":{"$ceil":"$theatre"}}}
+    pipeline = [match_query,group_query]
+    print(pipeline)
+    conn = MongoConnection()
+    #sprint(aColl for aColl in conn.db.list_collections())
+    user_coll = conn.db['uers_dummy']
+    row = user_coll.aggregate(pipeline)
+    val = list(row)
+    print(val)
+    return val
+
+
+
 def main():
     prefCat = "restaurant,nature,theatre"
     userId = insertUser("aneek",26,"M",0,0,{},prefCat)
