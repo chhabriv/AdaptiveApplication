@@ -24,6 +24,7 @@ var latestData;
 var currentRoute = 0
 
 document.getElementById ("startBtn").addEventListener ("click", getLatestData);
+
 function getLatestData(){
 
   currentRoute = 0
@@ -54,9 +55,16 @@ function getLatestData(){
 
 document.getElementById ("newUser").addEventListener ("click", function(){
   console.log("~~~")
-  window.location.href = "/test"
+  window.location.href = "/Registry"
 });
 
+document.getElementById ("existingUser").addEventListener ("click", function(){
+  console.log("~~~")
+  window.location.href = "/Login"
+});
+
+document.getElementById ("login").addEventListener ("click", setPrefExisting);
+document.getElementById ("signup").addEventListener ("click", setPrefNew);
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 function getNextRoute(){
@@ -158,21 +166,34 @@ function drawPolyline(jsonData){
       })
   }
 
+  function getUsername() {
+    var username = document.getElementById("Username").value;
+    return username;
+  }
 
   function getUserId() {
-    var username = document.getElementById("UserId").value;
-
-    return username;
+    var userid = document.getElementById("UserId").value;
+    return userid;
   }
+
+  function getGender() {
+    var gender = document.getElementById("Gender").value;
+    return gender;
+  }
+  function getAge() {
+    var age = document.getElementById("Age").value;
+    return age;
+  }
+
   function getDuration() {
-    var username = document.getElementById("Duration").value;
-
-    return username;
+    var duration = document.getElementById("Duration").value;
+    return duration;
   }
+
   function getBudget(){
     var tmp = document.getElementById("Budget").value;
-    var budget = 0;
-    switch (budget) {
+    var budget = 9;
+    switch (tmp) {
       case '$':
          budget = 0;
         break;
@@ -182,13 +203,17 @@ function drawPolyline(jsonData){
       case '$$$':
         budget = 2;
         break;
+      default:
+        break;
   }
+  return budget;
 }
 
   function getPre() {
-    var prefernce=['','',''];
+    var preference=['','',''];
     var inputTag = [document.getElementById("tag1").value,document.getElementById("tag2").value,document.getElementById("tag3").value];
-    for (var i = 0; i < 3; i++) {
+    var i = 0;
+    for (i = 0; i < 3; i++) {
       switch (inputTag[i]) {
         case 1:
           preference[i] = "outdoor";
@@ -227,17 +252,14 @@ function drawPolyline(jsonData){
           preference[i] = "shoes";
           break;
         default:
-          preference[i] = "";
           break;
-
       }
     }
     return preference;
   }
-  document.getElementById ("submit").addEventListener ("click", setPref);
 
-  function setPref() {
-    console.log('hdgy');
+  function setPrefExisting() {
+    console.log('ExistingUser');
     var userid = getUserId();
     var preference = getPre();
     var duration = getDuration();
@@ -256,3 +278,26 @@ function drawPolyline(jsonData){
       console.log(error);
       });
     }
+
+    function setPrefNew() {
+      console.log('New User');
+      var username = getUsername();
+      var age = getAge();
+      var gender = getGender();
+      var preference = getPre();
+      var duration = getDuration();
+      var budget = getBudget();
+      let returnJson = '{\"username\":'+ username+'\"age\":'+age+'\"gender\":'+gender+'\"duration\":'+duration+'\"budget\":'+budegt + '\"tag1\":'+preference[0]+'\"tag2\":'+preference[1]+'\"tag3\":'+preference[2]+'}';
+      console.log(returnJson);
+      var axiosConfig = {
+          headers: {
+              'Content-Type': 'application/json',
+              'accept' : '*/*',
+          }
+        };
+        ax.post('url to service', returnJson, axiosConfig).then(resp => {
+          console.log(resp);
+        }).catch(error => {
+        console.log(error);
+        });
+      }
