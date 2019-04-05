@@ -40,6 +40,7 @@ def contentFiltering(user,categories):
     
 def collaborativeFiltering(user):
     catWeights = constants.CATEGORY_WEIGHT_STRUCT #{"landmark":0,"nature":0,"shopping":0,"restaurant":0,"theatre":0}
+    print(user)
     presentCategories = user["categories"]
     avgWeights = userService.fetchCategoryWeightsForSimilarUsers(user['age'],user['gender'],user['avgBudget'],user['avgDuration'])
     print('similar user weights -- ',avgWeights)
@@ -65,6 +66,6 @@ def main():
     avgWeights = collaborativeFiltering(user)
     print('curr user matching average weights -- ',avgWeights)
     
-main()
+#main()
     
         

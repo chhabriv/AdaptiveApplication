@@ -16,9 +16,9 @@ class user(Document):
     name = StringField(required=True, max_length=15)
     age = IntField(required=True, max_length=2)
     gender = StringField(required=True, max_length=6)    
-    budget = IntField(required=True, max_length=10)
-    category = DictField(max_length=5)
-    duration = IntField(required=True, max_length=10)
+    avgBudget = IntField(required=True, max_length=10)
+    categories = DictField(max_length=5)
+    avgDuration = IntField(required=True, max_length=10)
 #    is_first= BooleanField(required=True, max_length=10)
 
 # =============================================================================
@@ -39,8 +39,8 @@ class category(Document):
 
 #User1.save()
 
-print(user.name)
+#print(user.name)
 
-user2=User2.to_json()
-user3=json.loads(user2)
-user2
+#user2=User2.to_json()
+#user3=json.loads(user2)
+#user2
