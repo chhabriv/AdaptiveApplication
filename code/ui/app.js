@@ -40,13 +40,13 @@ document.getElementById ("existingUser").addEventListener ("click", function(){
 
 document.getElementById ("Mary").addEventListener ("click", function(){
   var returnJson = new Object();
-  returnJson.userid = '';//need to fill in
+  returnJson.user_id = '';//need to fill in
   returnJson.name = 'Mary';
-  returnJson.preference = ['food','pubs','nature'];
+  returnJson.tags = ['food','pubs','nature'];
   returnJson.age = 23;
   returnJson.gender = 'F';
-  returnJson.duration = '6h';
-  returnJson.budget = '1';
+  returnJson.avgDuration = 6;
+  returnJson.avgBudget = '1';
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
   alert(returnJson);
@@ -57,9 +57,11 @@ document.getElementById ("Mary").addEventListener ("click", function(){
       'accept': '*/*',
     }
   };
-  ax.post('http://localhost:5000/suggest', returnJson).then(resp => {
-    console.log(resp);
-    latestdata = JSON.parse(resp)['places']
+  const ax = require('axios');
+
+  ax.post('http://localhost:5000/suggest', returnJson, axiosConfig).then(resp => {
+    console.log(resp.data['places']);
+    latestdata = resp.data['places']
   }).catch(error => {
     console.log(error);
   });
@@ -188,7 +190,7 @@ function drawPolyline(jsonData){
   }
 
 function test(){
-  var url = "http://localhost:3000/1"
+  var url = "http://localhost:5000/1"
   const http = require('http')
       http.get(url, (resp) => {
         let data = '';

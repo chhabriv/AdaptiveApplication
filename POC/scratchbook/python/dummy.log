@@ -1,0 +1,66 @@
+Successfully invoked the index route
+Successfully invoked the index route
+False
+False
+False
+False
+False
+False
+False
+False
+True
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca78997aade8e3370e58d79
+[{'category': 'restaurant', 'name': 'Xian Street Food Dublin', 'duration': 120, 'bestTimeToVisit': {'day': 'evening', 'season': 'all'}, 'geoLocation': {'latitude': 53.34107, 'longitude': -6.25971}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2359'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}, {'category': 'restaurant', 'name': 'Kimchi Hophouse', 'duration': 90, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.35398, 'longitude': -6.26104}, 'review': 4.4, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2230'}}, {'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca789deaade8e3370e58d7a
+[{'category': 'restaurant', 'name': 'Kimchi Hophouse', 'duration': 90, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.35398, 'longitude': -6.26104}, 'review': 4.4, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2230'}}, {'category': 'restaurant', 'name': 'The Vintage Teapot', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3504, 'longitude': -6.2597}, 'review': 4.5, 'Price': 15.0, 'hours': {'opening': '930', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}, {'category': 'restaurant', 'name': 'Mamas Revenge', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3419, 'longitude': -6.2538}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1000', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca789eaaade8e3370e58d7b
+[{'category': 'restaurant', 'name': 'The Vintage Teapot', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3504, 'longitude': -6.2597}, 'review': 4.5, 'Price': 15.0, 'hours': {'opening': '930', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Xian Street Food Dublin', 'duration': 120, 'bestTimeToVisit': {'day': 'evening', 'season': 'all'}, 'geoLocation': {'latitude': 53.34107, 'longitude': -6.25971}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2359'}}, {'category': 'restaurant', 'name': 'Mamas Revenge', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3419, 'longitude': -6.2538}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1000', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca78a00aade8e3370e58d7c
+[{'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}, {'category': 'restaurant', 'name': 'Kimchi Hophouse', 'duration': 90, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.35398, 'longitude': -6.26104}, 'review': 4.4, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2230'}}, {'category': 'restaurant', 'name': 'Mamas Revenge', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3419, 'longitude': -6.2538}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1000', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'The Vintage Teapot', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3504, 'longitude': -6.2597}, 'review': 4.5, 'Price': 15.0, 'hours': {'opening': '930', 'closing': '2000'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca78a0eaade8e3370e58d7d
+[{'category': 'restaurant', 'name': 'The Vintage Teapot', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3504, 'longitude': -6.2597}, 'review': 4.5, 'Price': 15.0, 'hours': {'opening': '930', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}, {'category': 'restaurant', 'name': 'Mamas Revenge', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3419, 'longitude': -6.2538}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1000', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Xian Street Food Dublin', 'duration': 120, 'bestTimeToVisit': {'day': 'evening', 'season': 'all'}, 'geoLocation': {'latitude': 53.34107, 'longitude': -6.25971}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2359'}}, {'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+('the available duration for ', 'shopping', ' is ', 0.0)
+('the available duration for ', 'theatre', ' is ', 0.0)
+5ca78a1aaade8e3370e58d7e
+[{'category': 'restaurant', 'name': 'Kimchi Hophouse', 'duration': 90, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.35398, 'longitude': -6.26104}, 'review': 4.4, 'Price': 20.0, 'hours': {'opening': '1200', 'closing': '2230'}}, {'category': 'restaurant', 'name': 'Mamas Revenge', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3419, 'longitude': -6.2538}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '1000', 'closing': '2000'}}, {'category': 'restaurant', 'name': 'Beshoff Bros', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.34439, 'longitude': -6.26598}, 'review': 4.5, 'Price': 20.0, 'hours': {'opening': '900', 'closing': '2300'}}, {'category': 'restaurant', 'name': 'Brother Hubbard South', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.33287, 'longitude': -6.26553}, 'review': 4.4, 'Price': 15.0, 'hours': {'opening': '830', 'closing': '1600'}}, {'category': 'restaurant', 'name': 'The Vintage Teapot', 'duration': 60, 'bestTimeToVisit': {'day': 'all', 'season': 'all'}, 'geoLocation': {'latitude': 53.3504, 'longitude': -6.2597}, 'review': 4.5, 'Price': 15.0, 'hours': {'opening': '930', 'closing': '2000'}}]
+True
+('the available duration for ', 'landmark', ' is ', 0.0)
+('the available duration for ', 'restaurant', ' is ', 360.0)
+('the available duration for ', 'nature', ' is ', 0.0)
+5ca78a2aaade8e3370e58d7f
+True
+True
