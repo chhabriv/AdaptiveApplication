@@ -126,14 +126,14 @@ def fetchCategoryWeightsForSimilarUsers(age,gender,avgBudget,avgDuration):
                              "shopping":{"$ceil":"$shopping"},
                              "theatre":{"$ceil":"$theatre"}}}
     pipeline = [match_query,group_query]
-    current_app.logger.info(' '.join(['The db query is ',pipeline]))
+    current_app.logger.info(pipeline)
     #print(pipeline)
     conn = MongoConnection()
     #sprint(aColl for aColl in conn.db.list_collections())
     user_coll = conn.db[DUMMY_USERS_DB]
     row = user_coll.aggregate(pipeline)
     val = list(row)
-    print(val)
+    #print(val)
     return val
 
 

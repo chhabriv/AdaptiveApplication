@@ -11,8 +11,8 @@ import json
 import user_crud
 import reccommender
 import places_crud
-from flask import current_app
 import logging
+from flask import current_app
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -42,8 +42,8 @@ INITIAL_WEIGHT_DICT={'landmark': 0,
                      'shopping': 0 }
 
 def plan_trip(user_json):
-    logger.info("Starting to plan trip")
-    logger.info(user_json)
+    current_app.logger.info("Starting to plan trip")
+    current_app.logger.info(user_json)
     #print("invoked plan trip -- ",user_json)
     user_received=json.loads(user_json)
     user_id = ''
@@ -52,26 +52,33 @@ def plan_trip(user_json):
     chosen_duration=user_received[DURATION]
     chosen_budget=user_received[BUDGET]
     if user_id is USER_ID_CHECK:
-        logger.info("Creating a new user and fetching places")
+        current_app.logger.info("Creating a new user and fetching places")
         #print('creating new user and fetching places')
         user_object=process_input(user_received)
         user=json.loads(save_user(user_object))
     else:
         retrieved_user=json.loads(retrieve_user(user_id))
+        update_mongo=False
         if (TAGS in user_received and user_received[TAGS] is not ''):
+            current_app.logger.info('Tags present so content filtering')
             current_category_weights=tags_to_category(user_received[TAGS])
             updated_weights=reccommender.contentFiltering(retrieved_user,current_category_weights)
+            update_mongo=True
         else:
+            current_app.logger.info('No tags so collab filtering')
             updated_weights=reccommender.collabFiltering(retrieved_user[AGE],retrieved_user[CATEGORY],retrieved_user[GENDER],chosen_budget,chosen_duration,)
-        print(updated_weights)
-        update=update_user(user_id,updated_weights,chosen_duration,chosen_budget)
-        if update==1:
-            user=json.loads(retrieve_user(user_id))
-        else:
-            logger.info("User update with new weights failed")
+        current_app.logger.info(updated_weights)
+        if update_mongo:
+            update=update_user(user_id,updated_weights,chosen_duration,chosen_budget)
+            if update==1:
+                current_app.logger.info("User {} updated successfully".format(user_id))
+            else:
+                current_app.logger.info("User {} update failed".format(user_id))
+        user=json.loads(retrieve_user(user_id))
+        user[CATEGORY]=updated_weights
             #print("USER UPDATE WITH NEW WEIGHTS FAILED")
-    logger.info(user[ID][OBJ_ID])        
-    print(user[ID][OBJ_ID])
+    current_app.logger.info(user[ID][OBJ_ID])        
+    #current_app.logger.info(user[ID][OBJ_ID])
     category=user[CATEGORY]
     #print('user categories -- ',category)
     chosen_category=choose_category(category)
@@ -80,16 +87,17 @@ def plan_trip(user_json):
     #print('available places as per choice -- ',raw_places)
     places_to_visit=preferred_places(raw_places,category,chosen_duration)
     #print('recommended places -- ',places_to_visit)
-    logger.info("Trip plannning completed")
+    current_app.logger.info("Trip plannning completed")
     #print('trip planned')
     return user[ID][OBJ_ID],user[NAME], places_to_visit
         
 def process_input(user_received):
         if user_received[TAGS] is not '':
            category_weights= tags_to_category(user_received[TAGS])
-           print(category_weights)
+           current_app.logger.info(category_weights)
         else:
             print("ERROR, NEW USER MUST HAVE TAGS")
+        user_object=None
         user_object=dto.user(
                             name=user_received[NAME],
                             age=user_received[AGE],
@@ -102,10 +110,14 @@ def process_input(user_received):
         return user_object
         
 def tags_to_category(tags):
-    print(tags)
+    #print(tags)
+    current_app.logger.info('%s %s','initial weights',INITIAL_WEIGHT_DICT)
     weights=''
-    weights=INITIAL_WEIGHT_DICT
-    global TAGS
+    
+    weights=INITIAL_WEIGHT_DICT.copy()
+    #current_app.logger.info(weights)
+    
+    #global TAGS
     #print('tags -- ',tags)
     for category in CATEGORY_TAG:
         #print('category -- ',category)
@@ -115,7 +127,7 @@ def tags_to_category(tags):
             if tag in CATEGORY_TAG.get(category):
                 #print('matched -- ',tag,category)
                 weights[category]=weights[category]+1;
-    logger.info(weights)
+    current_app.logger.info(weights)
     #print(weights)
     return weights
      
