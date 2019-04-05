@@ -9,7 +9,9 @@ from mongoconnection import MongoConnection
 import user_crud as user
 import random 
 import json
+from flask import current_app
 
+PLACES_DB_ = 'places'
 
 def fetchPlacesbyCategoriesDuration(categories,duration):
     catArr = categories.lower().split(",")
