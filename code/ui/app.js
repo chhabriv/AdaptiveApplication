@@ -33,8 +33,8 @@ document.getElementById ("newUser").addEventListener ("click", function(){
 
 document.getElementById ("existingUser").addEventListener ("click", function(){
   console.log("~~~")
-  test()
-  //window.location.href = "/Login"
+  //test()
+  window.location.href = "/Login"
 });
 
 
@@ -50,6 +50,19 @@ document.getElementById ("Mary").addEventListener ("click", function(){
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
   alert(returnJson);
+  alert('hdgy');
+  var axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'accept': '*/*',
+    }
+  };
+  ax.post('http://localhost:5000/suggest', returnJson).then(resp => {
+    console.log(resp);
+    latestdata = JSON.parse(resp)['places']
+  }).catch(error => {
+    console.log(error);
+  });
 });
 
 
@@ -97,7 +110,6 @@ function getNextRoute(){
     const http = require('http')
     http.get(url, (resp) => {
       let data = '';
-
       // A chunk of data has been recieved.
       resp.on('data', (chunk) => {
         data += chunk;
