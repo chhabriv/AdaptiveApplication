@@ -23,35 +23,8 @@ var esri_WorldImagery = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{
 var latestData;
 var currentRoute = 0
 
-document.getElementById ("startBtn").addEventListener ("click", getLatestData);
+document.getElementById ("startBtn").addEventListener ("click", test);
 
-function getLatestData(){
-
-  currentRoute = 0
-
-  var url = "http://localhost:3000/getRoutes"
-  const http = require('http')
-      http.get(url, (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-          latestData = JSON.parse(data)
-
-
-          getRoute(latestData[currentRoute].Origin, latestData[currentRoute].Destination)
-          currentRoute +=1
-        });
-
-      }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
-}
 
 document.getElementById ("newUser").addEventListener ("click", function(){
   console.log("~~~")
@@ -60,16 +33,50 @@ document.getElementById ("newUser").addEventListener ("click", function(){
 
 document.getElementById ("existingUser").addEventListener ("click", function(){
   console.log("~~~")
-  window.location.href = "/Login"
+  test()
+  //window.location.href = "/Login"
 });
 
-document.getElementById ("login").addEventListener ("click", setPrefExisting);
-document.getElementById ("signup").addEventListener ("click", setPrefNew);
+
+document.getElementById ("Mary").addEventListener ("click", function(){
+  var returnJson = new Object();
+  returnJson.userid = '';//need to fill in
+  returnJson.name = 'Mary';
+  returnJson.preference = ['food','pubs','nature'];
+  returnJson.age = 23;
+  returnJson.gender = 'F';
+  returnJson.duration = '6h';
+  returnJson.budget = '1';
+  returnJson = JSON.stringify(returnJson);
+  console.log(returnJson);
+  alert(returnJson);
+});
+
+
+
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
+
+
 function getNextRoute(){
 
-  getRoute(latestData[currentRoute].Origin, latestData[currentRoute].Destination)
+  var lat = latestData[currentRoute]['geoLocation']['latitude']
+  var lng = latestData[currentRoute]['geoLocation']['longitude']
+
+  var start;
+  var dest;
+
+  if(currentRoute == 0){
+    start = "Dublin"
+    dest = lat+","+lng
+  }
+  else{
+    start = lat+","+lng
+    dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
+  }
+
+
+  getRoute(start, dest)
   currentRoute +=1
 }
 
@@ -87,7 +94,6 @@ function getNextRoute(){
     }
 
     var url = "https://maps.googleapis.com/maps/api/directions/json?&origin="+start+"&destination="+destination+"&key=AIzaSyB2NHLaqVDF0uSmuNBMXI3DVsUanzdRD7Q"
-
     const http = require('http')
     http.get(url, (resp) => {
       let data = '';
@@ -104,6 +110,8 @@ function getNextRoute(){
 
     }).on("error", (err) => {
       console.log("Error: " + err.message);
+      console.log("Retrying...")
+      getRoute(start, destination)
     });
   }
 
@@ -118,10 +126,9 @@ function drawPolyline(jsonData){
     if (destMarker) {
       map.removeLayer(destMarker);
     }
-    console.log(prevPolyline)
+    //console.log(prevPolyline)
     if (prevPolyline) {
       for(stepPolyline in prevPolyline){
-        console.log("removing"+stepPolyline)
         map.removeLayer(prevPolyline[stepPolyline]);
       }
       prevPolyline = []
@@ -160,8 +167,51 @@ function drawPolyline(jsonData){
                   lineJoin: 'round'
                 }).addTo(map)
 
-                prevPolyline.push(polyline)
+                if(prevPolyline){
+                  prevPolyline.push(polyline)
+                }
               })
             })
       })
+  }
+
+function test(){
+  var url = "http://localhost:3000/1"
+  const http = require('http')
+      http.get(url, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+          latestData = JSON.parse(data)['places']
+
+          getNextRoute()
+
+        });
+
+      }).on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
+}
+
+
+  function handleResponse(data){
+
+    var username = data['user_name']
+    var places = data['places']
+    var currentPlaceLatLng;
+    var previousPlaceLatLng = "Dublin";
+    i=0
+    for(i =0; i < places.length -1; i++){
+      var geoLoc = places[i]['geoLocation']
+
+      var currentPlaceLatLng = parseFloat(geoLoc['latitude'])+","+parseFloat(geoLoc['longitude'])
+      getRoute(previousPlaceLatLng, currentPlaceLatLng )
+      previousPlaceLatLng = currentPlaceLatLng
+    }
   }
