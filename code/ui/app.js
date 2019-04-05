@@ -38,11 +38,7 @@ document.getElementById ("existingUser").addEventListener ("click", function(){
 });
 
 
-document.getElementById ("Mary").addEventListener ("click", sendMary());
-document.getElementById ("John").addEventListener ("click", sendJohn());
-document.getElementById ("Jane").addEventListener ("click", sendJane());
-
-function sendMary(){
+document.getElementById ("Mary").addEventListener ("click", function(){
   var returnJson = new Object();
   returnJson.userid = '';//need to fill in
   returnJson.name = 'Mary';
@@ -53,31 +49,9 @@ function sendMary(){
   returnJson.budget = '1';
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
-  alert("11");
-  //alert('hdgy');
-  // var axiosConfig = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'accept': '*/*',
-  //   }
-  // };
-  // ax.post('url to service', returnJson, axiosConfig).then(resp => {
-  //   console.log(resp);
-  // }).catch(error => {
-  //   console.log(error);
-  // });
   alert(returnJson);
-}
+});
 
-function sendJohn(){
-  alert('john');
-
-}
-
-function sendJane(){
-
-
-}
 
 
 
