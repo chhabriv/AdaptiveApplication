@@ -257,7 +257,17 @@ function drawPolyline(jsonData){
     }
     return preference;
   }
-
+  function submit_user() {
+    var username = document.getElementById("Name").value;
+    var age = document.getElementById("Age").value;
+    var duration = document.getElementById("Duration").value;
+    var gender = document.getElementById("Gender").value;
+    var budget = document.getElementById("Budget").value
+    var inputTag1 = document.getElementById("tag1").value;
+    var inputTag2 = document.getElementById("tag2").value;
+    var inputTag3 = document.getElementById("tag3").value;
+    alert(username);
+}
   function setPrefExisting() {
     console.log('ExistingUser');
     var userid = getUserId();
@@ -295,7 +305,7 @@ function drawPolyline(jsonData){
               'accept' : '*/*',
           }
         };
-        ax.post('url to service', returnJson, axiosConfig).then(resp => {
+        ax.post('http://localhost:500/suggest', returnJson, axiosConfig).then(resp => {
           console.log(resp);
         }).catch(error => {
         console.log(error);

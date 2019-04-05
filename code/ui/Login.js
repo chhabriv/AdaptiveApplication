@@ -1,19 +1,20 @@
 function getUserId() {
   var username = document.getElementById("UserId").value;
-
+  alert(username);
   return username;
 }
+
 function getDuration() {
   var username = document.getElementById("Duration").value;
-
   return username;
 }
-function getBudget(){
+
+function getBudget() {
   var tmp = document.getElementById("Budget").value;
   var budget = 0;
   switch (budget) {
     case '$':
-       budget = 0;
+      budget = 0;
       break;
     case '$$':
       budget = 1;
@@ -21,11 +22,14 @@ function getBudget(){
     case '$$$':
       budget = 2;
       break;
+    default:
+      break;
+  }
 }
 
 function getPre() {
-  var prefernce=['','',''];
-  var inputTag = [document.getElementById("tag1").value,document.getElementById("tag2").value,document.getElementById("tag3").value];
+  var prefernce = ['', '', ''];
+  var inputTag = [document.getElementById("tag1").value, document.getElementById("tag2").value, document.getElementById("tag3").value];
   for (var i = 0; i < 3; i++) {
     switch (inputTag[i]) {
       case 1:
@@ -72,27 +76,24 @@ function getPre() {
   }
   return preference;
 }
-document.getElementById ("submit").addEventListener ("click", setPref);
 
 function setPref() {
-  console.log('hdgy');
+  alert('hdgy');
   var userid = getUserId();
   var preference = getPre();
   var duration = getDuration();
   var budget = getBudget();
-  let returnJson = '{\"userid\":'+ userid+'\"duration\":'+duration+'\"budget\":'+budegt + '\"tag1\":'+preference[0]+'\"tag2\":'+preference[1]+'\"tag3\":'+preference[2]+'}';
+  let returnJson = '{\"userid\":' + userid + '\"duration\":' + duration + '\"budget\":' + budegt + '\"tag\":['+preference[0]+','+preference[1]+','+preference[2]+']}';
   console.log(returnJson);
   var axiosConfig = {
-      headers: {
-          'Content-Type': 'application/json',
-          'accept' : '*/*',
-      }
-    };
-    ax.post('url to service', returnJson, axiosConfig).then(resp => {
-      console.log(resp);
-    }).catch(error => {
-    console.log(error);
-    });
+    headers: {
+      'Content-Type': 'application/json',
+      'accept': '*/*',
     }
-
+  };
+  ax.post('url to service', returnJson, axiosConfig).then(resp => {
+    console.log(resp);
+  }).catch(error => {
+    console.log(error);
+  });
 }
