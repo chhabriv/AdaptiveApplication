@@ -61,7 +61,10 @@ document.getElementById ("Mary").addEventListener ("click", function(){
 
   ax.post('http://localhost:5000/suggest', returnJson, axiosConfig).then(resp => {
     console.log(resp.data['places']);
-    latestdata = resp.data['places']
+    latestData = resp.data['places']
+
+
+    getNextRoute()
   }).catch(error => {
     console.log(error);
   });
@@ -74,7 +77,6 @@ document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
 
 function getNextRoute(){
-
   var lat = latestData[currentRoute]['geoLocation']['latitude']
   var lng = latestData[currentRoute]['geoLocation']['longitude']
 
@@ -107,8 +109,10 @@ function getNextRoute(){
       alert("Destination location cannot be empty!")
       return;
     }
+    console.log("Routing from ::"+start+"  ::  "+destination)
 
     var url = "https://maps.googleapis.com/maps/api/directions/json?&origin="+start+"&destination="+destination+"&key=AIzaSyB2NHLaqVDF0uSmuNBMXI3DVsUanzdRD7Q"
+    console.log(url)
     const http = require('http')
     http.get(url, (resp) => {
       let data = '';
@@ -190,7 +194,7 @@ function drawPolyline(jsonData){
   }
 
 function test(){
-  var url = "http://localhost:5000/1"
+    var url = "http://localhost:5000/1"
   const http = require('http')
       http.get(url, (resp) => {
         let data = '';
