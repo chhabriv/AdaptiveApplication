@@ -29,10 +29,10 @@ def fetchUsers(user_id):
 def suggest_places():
     app.logger.info(request.is_json)
     input_data = request.get_json()
-    user_id,places = service.plan_trip(json.dumps(input_data))
+    user_id,user_name,places = service.plan_trip(json.dumps(input_data))
     app.logger.info(user_id)
     app.logger.info(places)
-    return jsonify(user_id=user_id,places=str(places))
+    return jsonify(user_id=user_id,user_name=user_name,places=places)
     #print(input_data)
     #return str(input_data)
         

@@ -104,7 +104,7 @@ def fetchPlacesByCategoriesBudget(categories,budget):
     dbConn = MongoConnection()
     places_coll = dbConn.getPlacesCollection()
     
-    places = places_coll.find(query)
+    places = places_coll.find(query,{"_id":0,"suitableAge":0,"location":0,"wayToGetThere":0})
     
     locations = []
     

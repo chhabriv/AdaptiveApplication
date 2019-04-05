@@ -82,7 +82,7 @@ def plan_trip(user_json):
     #print('recommended places -- ',places_to_visit)
     logger.info("Trip plannning completed")
     #print('trip planned')
-    return user[ID][OBJ_ID], places_to_visit
+    return user[ID][OBJ_ID],user[NAME], places_to_visit
         
 def process_input(user_received):
         if user_received[TAGS] is not '':
