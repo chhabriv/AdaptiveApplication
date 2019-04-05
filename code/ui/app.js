@@ -37,6 +37,50 @@ document.getElementById ("existingUser").addEventListener ("click", function(){
   //window.location.href = "/Login"
 });
 
+
+document.getElementById ("Mary").addEventListener ("click", sendMary());
+document.getElementById ("John").addEventListener ("click", sendJohn());
+document.getElementById ("Jane").addEventListener ("click", sendJane());
+
+function sendMary(){
+  var returnJson = new Object();
+  returnJson.userid = '';//need to fill in
+  returnJson.name = 'Mary';
+  returnJson.preference = ['food','pubs','nature'];
+  returnJson.age = 23;
+  returnJson.gender = 'F';
+  returnJson.duration = '6h';
+  returnJson.budget = '1';
+  returnJson = JSON.stringify(returnJson);
+  console.log(returnJson);
+  alert("11");
+  //alert('hdgy');
+  // var axiosConfig = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'accept': '*/*',
+  //   }
+  // };
+  // ax.post('url to service', returnJson, axiosConfig).then(resp => {
+  //   console.log(resp);
+  // }).catch(error => {
+  //   console.log(error);
+  // });
+  alert(returnJson);
+}
+
+function sendJohn(){
+  alert('john');
+
+}
+
+function sendJane(){
+
+
+}
+
+
+
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
 
