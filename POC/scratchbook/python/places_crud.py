@@ -98,7 +98,7 @@ def fetchPlacesByCategoriesBudget(categories,budget):
     query = dict()
     query["category"] = { "$in": categories }
     query["Price"] = {"$lte":20}
-    print(query)
+    #print(query)
     dbConn = MongoConnection()
     places_coll = dbConn.getPlacesCollection()
     
