@@ -86,8 +86,6 @@ document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
 function getNextRoute(){
 
-  console.log("~~~~~~~")
-  console.log(latestData)
   var lat = latestData[currentRoute]['geoLocation']['latitude']
   var lng = latestData[currentRoute]['geoLocation']['longitude']
 
@@ -111,7 +109,6 @@ function getNextRoute(){
 
   //ToDo change method to take in starting lat/long and route to destination lat/long
   function getRoute(start, destination){
-    console.log("In get Route")
     if(start == ""){
       alert("Starting location cannot be empty!")
       return;
@@ -139,6 +136,8 @@ function getNextRoute(){
 
     }).on("error", (err) => {
       console.log("Error: " + err.message);
+      console.log("Retrying...")
+      getRoute(start, destination)
     });
   }
 
@@ -153,10 +152,9 @@ function drawPolyline(jsonData){
     if (destMarker) {
       map.removeLayer(destMarker);
     }
-    console.log(prevPolyline)
+    //console.log(prevPolyline)
     if (prevPolyline) {
       for(stepPolyline in prevPolyline){
-        console.log("removing"+stepPolyline)
         map.removeLayer(prevPolyline[stepPolyline]);
       }
       prevPolyline = []
@@ -201,8 +199,6 @@ function drawPolyline(jsonData){
               })
             })
       })
-
-      console.log("Draw polyline done.....")
   }
 
 function test(){
