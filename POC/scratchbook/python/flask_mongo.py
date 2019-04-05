@@ -20,15 +20,6 @@ def welcome():
 	return "Welcome to Adaptive Itinerarizer"
 	
 	
-
-@app.route('/fetch')
-def fetch():
-	user_collection = db["users"]
-	for aUser in user_collection.find({"userId":9145}):
-		app.logger.info(aUser['categories'])
-		
-		return render_template('welcome.html',name=aUser['name'],age=aUser['age'],result=dict(aUser['categories']))
-
 @app.route('/fetch/user/<user_id>')
 def fetchUsers(user_id):
 	return user_crud.fetchUser(user_id)
@@ -36,11 +27,12 @@ def fetchUsers(user_id):
 
 @app.route('/suggest', methods=['POST'])
 def suggest_places():
-    print(request.is_json)
+    app.logger.info(request.is_json)
     input_data = request.get_json()
-    user_id,places = service.plan_trip(json.dumps(input_data))
-    print(user_id)
-    return jsonify(user_id=user_id,places=str(places))
+    user_id,user_name,places = service.plan_trip(json.dumps(input_data))
+    app.logger.info(user_id)
+    app.logger.info(places)
+    return jsonify(user_id=user_id,user_name=user_name,places=places)
     #print(input_data)
     #return str(input_data)
         
@@ -71,7 +63,7 @@ if __name__ == '__main__':
 	#conn = MongoConnection()
 	#MongoConnection._init_(app)
 	handler = RotatingFileHandler('dummy.log', maxBytes=10000, backupCount=1)
-	handler.setLevel(logging.INFO)
+	#handler.setLevel(logging.INFO)
 	logging.getLogger(__name__).setLevel(logging.INFO)
 	logging.getLogger(__name__).addHandler(handler)
 	app.logger.setLevel(logging.INFO)

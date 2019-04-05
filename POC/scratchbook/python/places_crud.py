@@ -9,7 +9,9 @@ from mongoconnection import MongoConnection
 import user_crud as user
 import random 
 import json
+from flask import current_app
 
+PLACES_DB_ = 'places'
 
 def fetchPlacesbyCategoriesDuration(categories,duration):
     catArr = categories.lower().split(",")
@@ -102,7 +104,7 @@ def fetchPlacesByCategoriesBudget(categories,budget):
     dbConn = MongoConnection()
     places_coll = dbConn.getPlacesCollection()
     
-    places = places_coll.find(query)
+    places = places_coll.find(query,{"_id":0,"suitableAge":0,"location":0,"wayToGetThere":0})
     
     locations = []
     

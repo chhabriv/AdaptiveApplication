@@ -9,6 +9,11 @@ from mongoconnection import MongoConnection
 from random import randint
 import json
 import dto
+from flask import current_app
+
+
+CURRENT_USER_DB = 'users'
+DUMMY_USERS_DB = 'uers_dummy'
 
 def insert_user(user):
     return user.save()
@@ -18,9 +23,9 @@ def retrieve_user(user_id):
 
 def update_user(user_id,weight,new_budget,new_duration):
     return dto.user.objects(id=user_id).update(
-            category=weight,
-            duration=new_duration,
-            budget=new_budget)
+            categories=weight,
+            avgDuration=new_duration,
+            avgBudget=new_budget)
 
 def insertUser(name,age,gender,budget=0,duration=0,visited={},prefCategories=""):
     landmark=nature=shopping=theatre=restaurant = 0
@@ -102,10 +107,10 @@ def updateWeightsByJson(userId,categoryWeights):
 
 
 def fetchCategoryWeightsForSimilarUsers(age,gender,avgBudget,avgDuration):
-    age = 60
-    avgBudget = '2'
-    avgDuration = '6'
-    gender = 'M'
+    #age = 60
+    #avgBudget = '10'
+    #avgDuration = '6'
+    #gender = 'M'
 
 
     match_query = {"$match":{"age":{"$gte":age-5,"$lte":age+5},"gender":gender,
@@ -121,10 +126,11 @@ def fetchCategoryWeightsForSimilarUsers(age,gender,avgBudget,avgDuration):
                              "shopping":{"$ceil":"$shopping"},
                              "theatre":{"$ceil":"$theatre"}}}
     pipeline = [match_query,group_query]
-    print(pipeline)
+    current_app.logger.info(' '.join(['The db query is ',pipeline]))
+    #print(pipeline)
     conn = MongoConnection()
     #sprint(aColl for aColl in conn.db.list_collections())
-    user_coll = conn.db['uers_dummy']
+    user_coll = conn.db[DUMMY_USERS_DB]
     row = user_coll.aggregate(pipeline)
     val = list(row)
     print(val)

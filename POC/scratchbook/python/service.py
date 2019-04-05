@@ -11,6 +11,10 @@ import json
 import user_crud
 import reccommender
 import places_crud
+from flask import current_app
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 NAME='name'
 GENDER='gender'
@@ -38,7 +42,9 @@ INITIAL_WEIGHT_DICT={'landmark': 0,
                      'shopping': 0 }
 
 def plan_trip(user_json):
-    print("invoked plan trip -- ",user_json)
+    logger.info("Starting to plan trip")
+    logger.info(user_json)
+    #print("invoked plan trip -- ",user_json)
     user_received=json.loads(user_json)
     user_id = ''
     if(USER_ID in user_received):
@@ -46,7 +52,8 @@ def plan_trip(user_json):
     chosen_duration=user_received[DURATION]
     chosen_budget=user_received[BUDGET]
     if user_id is USER_ID_CHECK:
-        print('creating new user and fetching places')
+        logger.info("Creating a new user and fetching places")
+        #print('creating new user and fetching places')
         user_object=process_input(user_received)
         user=json.loads(save_user(user_object))
     else:
@@ -61,7 +68,9 @@ def plan_trip(user_json):
         if update==1:
             user=json.loads(retrieve_user(user_id))
         else:
-            print("USER UPDATE WITH NEW WEIGHTS FAILED")
+            logger.info("User update with new weights failed")
+            #print("USER UPDATE WITH NEW WEIGHTS FAILED")
+    logger.info(user[ID][OBJ_ID])        
     print(user[ID][OBJ_ID])
     category=user[CATEGORY]
     #print('user categories -- ',category)
@@ -71,8 +80,9 @@ def plan_trip(user_json):
     #print('available places as per choice -- ',raw_places)
     places_to_visit=preferred_places(raw_places,category,chosen_duration)
     #print('recommended places -- ',places_to_visit)
-    print('trip planned')
-    return user[ID][OBJ_ID], places_to_visit
+    logger.info("Trip plannning completed")
+    #print('trip planned')
+    return user[ID][OBJ_ID],user[NAME], places_to_visit
         
 def process_input(user_received):
         if user_received[TAGS] is not '':
@@ -105,7 +115,8 @@ def tags_to_category(tags):
             if tag in CATEGORY_TAG.get(category):
                 #print('matched -- ',tag,category)
                 weights[category]=weights[category]+1;
-    print(weights)
+    logger.info(weights)
+    #print(weights)
     return weights
      
 def choose_category(category_weights):
@@ -129,7 +140,9 @@ def preferred_places(raw_places,cat_weights,duration):
     total_weight = sum(cat_weights[cat] for cat in cat_weights)
     for aCat in cat_weights.keys():
         available_duration = cat_weights[aCat]/total_weight*int(duration)*60
-        print("the available duration for ",aCat," is ",available_duration)
+        avlbl_duration_category = "the available duration for ",aCat," is ",available_duration
+        current_app.logger.info(avlbl_duration_category)
+        #print("the available duration for ",aCat," is ",available_duration)
         validLocations.extend(limitPlacesByCategoryDuration(raw_places,aCat,available_duration))
     return validLocations
         
@@ -148,7 +161,7 @@ def limitPlacesByCategoryDuration(locations,category_name,duration):
             #print(aLoc['name'],aLoc['duration'])
             if((currDuration + aLoc['duration']) <= duration):
                 currDuration += aLoc['duration']
-                data = aLoc['name'] +"--"+ str(aLoc['duration'])
+                #data = aLoc['name'] +"--"+ str(aLoc['duration'])
                 validLocations.append(aLoc)
     #print(validLocations)
     return validLocations 
