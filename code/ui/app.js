@@ -23,35 +23,8 @@ var esri_WorldImagery = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{
 var latestData;
 var currentRoute = 0
 
-document.getElementById ("startBtn").addEventListener ("click", getLatestData);
+document.getElementById ("startBtn").addEventListener ("click", test);
 
-function getLatestData(){
-
-  currentRoute = 0
-
-  var url = "http://localhost:3000/getRoutes"
-  const http = require('http')
-      http.get(url, (resp) => {
-        let data = '';
-
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-          latestData = JSON.parse(data)
-
-
-          getRoute(latestData[currentRoute].Origin, latestData[currentRoute].Destination)
-          currentRoute +=1
-        });
-
-      }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
-}
 
 document.getElementById ("newUser").addEventListener ("click", function(){
   console.log("~~~")
@@ -60,22 +33,41 @@ document.getElementById ("newUser").addEventListener ("click", function(){
 
 document.getElementById ("existingUser").addEventListener ("click", function(){
   console.log("~~~")
-  window.location.href = "/Login"
+  test()
+  //window.location.href = "/Login"
 });
 
-document.getElementById ("login").addEventListener ("click", setPrefExisting);
-document.getElementById ("signup").addEventListener ("click", setPrefNew);
-
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
+
+
 function getNextRoute(){
 
-  getRoute(latestData[currentRoute].Origin, latestData[currentRoute].Destination)
+  console.log("~~~~~~~")
+  console.log(latestData)
+  var lat = latestData[currentRoute]['geoLocation']['latitude']
+  var lng = latestData[currentRoute]['geoLocation']['longitude']
+
+  var start;
+  var dest;
+
+  if(currentRoute == 0){
+    start = "Dublin"
+    dest = lat+","+lng
+  }
+  else{
+    start = lat+","+lng
+    dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
+  }
+
+
+  getRoute(start, dest)
   currentRoute +=1
 }
 
 
   //ToDo change method to take in starting lat/long and route to destination lat/long
   function getRoute(start, destination){
+    console.log("In get Route")
     if(start == ""){
       alert("Starting location cannot be empty!")
       return;
@@ -87,7 +79,6 @@ function getNextRoute(){
     }
 
     var url = "https://maps.googleapis.com/maps/api/directions/json?&origin="+start+"&destination="+destination+"&key=AIzaSyB2NHLaqVDF0uSmuNBMXI3DVsUanzdRD7Q"
-
     const http = require('http')
     http.get(url, (resp) => {
       let data = '';
@@ -160,8 +151,53 @@ function drawPolyline(jsonData){
                   lineJoin: 'round'
                 }).addTo(map)
 
-                prevPolyline.push(polyline)
+                if(prevPolyline){
+                  prevPolyline.push(polyline)
+                }
               })
             })
       })
+
+      console.log("Draw polyline done.....")
+  }
+
+function test(){
+  var url = "http://localhost:3000/1"
+  const http = require('http')
+      http.get(url, (resp) => {
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+          latestData = JSON.parse(data)['places']
+
+          getNextRoute()
+
+        });
+
+      }).on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
+}
+
+
+  function handleResponse(data){
+
+    var username = data['user_name']
+    var places = data['places']
+    var currentPlaceLatLng;
+    var previousPlaceLatLng = "Dublin";
+    i=0
+    for(i =0; i < places.length -1; i++){
+      var geoLoc = places[i]['geoLocation']
+
+      var currentPlaceLatLng = parseFloat(geoLoc['latitude'])+","+parseFloat(geoLoc['longitude'])
+      getRoute(previousPlaceLatLng, currentPlaceLatLng )
+      previousPlaceLatLng = currentPlaceLatLng
+    }
   }
