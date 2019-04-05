@@ -23,6 +23,9 @@ var esri_WorldImagery = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{
 var latestData;
 var currentRoute = 0
 
+var startMarker;
+var destMarker;
+var prevPolyline = []
 document.getElementById ("startBtn").addEventListener ("click", test);
 
 
@@ -33,23 +36,40 @@ document.getElementById ("newUser").addEventListener ("click", function(){
 
 document.getElementById ("existingUser").addEventListener ("click", function(){
   console.log("~~~")
-  test()
-  //window.location.href = "/Login"
+  //test()
+  window.location.href = "/Login"
 });
 
 
 document.getElementById ("Mary").addEventListener ("click", function(){
   var returnJson = new Object();
-  returnJson.userid = '';//need to fill in
+  returnJson.user_id = '';//need to fill in
   returnJson.name = 'Mary';
-  returnJson.preference = ['food','pubs','nature'];
+  returnJson.tags = ['food','pubs','nature'];
   returnJson.age = 23;
   returnJson.gender = 'F';
-  returnJson.duration = '6h';
-  returnJson.budget = '1';
+  returnJson.avgDuration = 6;
+  returnJson.avgBudget = '1';
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
   alert(returnJson);
+  alert('hdgy');
+  var axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      //'accept': '*/*',
+      //'Access-Control-Allow-Origin': '*',
+    }
+  };
+  const ax = require('axios');
+
+  ax.post('http://127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
+    console.log(resp.data['places']);
+    latestData = resp.data['places']
+    getNextRoute()
+  }).catch(error => {
+    console.log(error);
+  });
 });
 
 
@@ -59,7 +79,6 @@ document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
 
 function getNextRoute(){
-
   var lat = latestData[currentRoute]['geoLocation']['latitude']
   var lng = latestData[currentRoute]['geoLocation']['longitude']
 
@@ -92,12 +111,13 @@ function getNextRoute(){
       alert("Destination location cannot be empty!")
       return;
     }
+    console.log("Routing from ::"+start+"  ::  "+destination)
 
     var url = "https://maps.googleapis.com/maps/api/directions/json?&origin="+start+"&destination="+destination+"&key=AIzaSyB2NHLaqVDF0uSmuNBMXI3DVsUanzdRD7Q"
+    console.log(url)
     const http = require('http')
     http.get(url, (resp) => {
       let data = '';
-
       // A chunk of data has been recieved.
       resp.on('data', (chunk) => {
         data += chunk;
@@ -115,9 +135,6 @@ function getNextRoute(){
     });
   }
 
-var startMarker;
-var destMarker;
-var prevPolyline = []
 
 function drawPolyline(jsonData){
     if (startMarker) {
@@ -175,8 +192,177 @@ function drawPolyline(jsonData){
       })
   }
 
+
+
+
+  function getUserId() {
+    var userid = document.getElementById("UserId").value;
+    return userid;
+  }
+
+
+  function getUsername() {
+    var username = document.getElementById("Username").value;
+    return username;
+  }
+
+  function getDuration() {
+    var duration = document.getElementById("Duration").value;
+    return duration;
+  }
+
+  function getAge() {
+    var age = document.getElementById("Age").value;
+    return age;
+  }
+
+  function getGender() {
+    var gender = document.getElementById("Gender").value;
+    return gender;
+  }
+
+  function getBudget() {
+    var tmp = document.getElementById("Budget").value;
+    alert(tmp)
+    var budget = 99;
+    switch (tmp) {
+      case '$':
+        budget = 0;
+        break;
+      case '$$':
+        budget = 1;
+        break;
+      case '$$$':
+        budget = 2;
+        break;
+      default:
+        break;
+    }
+    alert(budget);
+    return budget;
+  }
+
+  function getPre() {
+    var preference = ['', '', ''];
+    var inputTag = [document.getElementById("tag1").value, document.getElementById("tag2").value, document.getElementById("tag3").value];
+
+    for (var i = 0; i < 3; i++) {
+      switch (inputTag[i]) {
+        case ('1'):
+          //alert(preference[i])
+          preference[i] = "outdoor";
+          //alert(preference[i])
+          break;
+        case ('2'):
+          preference[i] = "museum";
+          break;
+        case ('3'):
+          preference[i] = "historic";
+          break;
+        case ('4'):
+          preference[i] = "park";
+          break;
+        case ('5'):
+          preference[i] = "lake";
+          break;
+        case ('6'):
+          preference[i] = "food";
+          break;
+        case ('7'):
+          preference[i] = "pubs";
+          break;
+        case ('8'):
+          preference[i] = "play";
+          break;
+        case ('9'):
+          preference[i] = "movie";
+          break;
+        case ('10'):
+          preference[i] = "styling";
+          break;
+        case ('11'):
+          preference[i] = "sttire";
+          break;
+        case ('12'):
+          preference[i] = "shoes";
+          break;
+        default:
+          //preference[i] = "";
+          break;
+
+      }
+      //alert(preference[i])
+    }
+    return preference;
+  }
+
+  function setPrefNew() {
+    var returnJson = new Object();
+    returnJson.user_id = '';
+    returnJson.name = getUsername();
+    returnJson.tags = getPre();
+    returnJson.age = getAge();
+    returnJson.gender = getGender();
+    returnJson.avgDuration = getDuration();
+    returnJson.avgBudget = getBudget();
+    returnJson = JSON.stringify(returnJson);
+    console.log(returnJson);
+    var axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': '*/*',
+      }
+    };
+    alert('11');
+    const ax = require('axios');
+    ax.post('http://localhost:5000/suggest', returnJson, axiosConfig).then(resp => {
+      console.log(resp.data['places']);
+      alert(resp.data['user_id'])
+      latestData = resp.data['places'];
+      //getNextRoute()
+      alert(latestData);
+    }).catch(error => {
+      console.log(error);
+    });
+
+  }
+
+  function setPrefOld() {
+    var returnJson = new Object();
+    returnJson.user_id = getUserId();
+    returnJson.name = '';
+    returnJson.tags = getPre();
+    returnJson.age = '';
+    returnJson.gender = '';
+    returnJson.avgDuration = getDuration();
+    returnJson.avgBudget = getBudget();
+    returnJson = JSON.stringify(returnJson);
+    console.log(returnJson);
+    //alert('hdgy');
+    // var axiosConfig = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'accept': '*/*',
+    //   }
+    // };
+    // ax.post('url to service', returnJson, axiosConfig).then(resp => {
+    //   console.log(resp);
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+
+  }
+
+
+
+
+
+
+
+
+
 function test(){
-  var url = "http://localhost:3000/1"
+    var url = "http://localhost:5000/1"
   const http = require('http')
       http.get(url, (resp) => {
         let data = '';

@@ -98,18 +98,15 @@ function getPre() {
 
 function setPref() {
   var returnJson = new Object();
-  returnJson.userid = '';
+  returnJson.user_id = '';
   returnJson.name = getUsername();
-  returnJson.preference = getPre();
+  returnJson.tags = getPre();
   returnJson.age = getAge();
   returnJson.gender = getGender();
-  returnJson.duration = getDuration();
-  returnJson.budget = getBudget();
-  //var returnJson = '{"username":"' + username + '","age":' + age + ',"gender":"' + gender + '","duration":"' + duration + '","budget":"' + budegt + '","tag1":[' + preference[0] + ',' + preference[1] + ',' + preference[2] + ']}';
+  returnJson.avgDuration = getDuration();
+  returnJson.avgBudget = getBudget();
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
-  alert("11");
-  window.location.href="http://127.0.0.1:9966";
   //alert('hdgy');
   // var axiosConfig = {
   //   headers: {
