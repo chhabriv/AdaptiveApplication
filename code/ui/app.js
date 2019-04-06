@@ -7,8 +7,8 @@ var map = L.map('map', {
   scrollWheelZoom: true
 });
 
-//var backendUrl = "http://localhost:5000/suggest"
-var backendUrl = "http://localhost:3000/suggest"
+var backendUrl = "http://localhost:5000/suggest"
+//var backendUrl = "http://localhost:3000/suggest"
 
 
 // Set the position and zoom level of the map
@@ -66,8 +66,8 @@ document.getElementById ("Mary").addEventListener ("click", function(){
   };
   const ax = require('axios');
 
-  //ax.post(backendUrl, returnJson, axiosConfig).then(resp => {
-  ax.get(backendUrl, axiosConfig).then(resp => {
+  ax.post(backendUrl, returnJson, axiosConfig).then(resp => {
+  //ax.get(backendUrl, axiosConfig).then(resp => {
     console.log(resp.data['places']);
     latestData = resp.data['places']
 
