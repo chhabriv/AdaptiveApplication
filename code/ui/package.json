@@ -14,7 +14,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "leaflet": "^1.0.1",
-    "polyline-encoded": "0.0.8"
+    "polyline-encoded": "0.0.8",
+    "require": "^2.4.20"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
