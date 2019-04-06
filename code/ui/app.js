@@ -154,6 +154,9 @@ function getNextRoute(){
     });
   }
 
+  var startMarker;
+  var destMarker;
+  var prevPolyline = []
 
 function drawPolyline(jsonData){
     if (startMarker) {
