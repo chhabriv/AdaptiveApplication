@@ -1,4 +1,5 @@
 // Initialize leaflet.js
+
 var L = require('leaflet');
 var polyUtil = require('polyline-encoded')
 
@@ -389,6 +390,7 @@ function setPrefNew() {
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
   alert('hdgy');
+  const ax = require('axios');
   var axiosConfig = {
     headers: {
       'Content-Type': 'application/json',
@@ -419,6 +421,7 @@ function setPrefOld() {
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
   alert('hdgy');
+  const ax = require('axios');
   var axiosConfig = {
     headers: {
       'Content-Type': 'application/json',

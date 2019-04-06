@@ -13,7 +13,7 @@
     "axios": "^0.18.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "leaflet": "^1.0.1",
+    "leaflet": "^1.4.0",
     "polyline-encoded": "0.0.8",
     "require": "^2.4.20"
   },
