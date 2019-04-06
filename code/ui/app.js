@@ -398,6 +398,7 @@ function setPrefNew() {
   ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
     console.log(resp);
     returnUserId = JSON.parse(resp)['user_id'];
+    alert(returnUserId);
     latestData = JSON.parse(resp)['places'];
 
   }).catch(error => {
