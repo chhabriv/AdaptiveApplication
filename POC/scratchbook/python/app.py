@@ -7,11 +7,14 @@ Created on Fri Apr  5 00:12:18 2019
 import service
 import json
 
-is_first = False
-user_json = {"name":"Debrup","age":28,"gender":'M','avgBudget':1,'avgDuration':12,"tags":["outdoor","lake","pubs"]}
-updated_json = {'user_id':'5ca69d6f6eef607efc321f5c','avgBudget':1,'avgDuration':6}
+is_first = True
+user_json = {"name":"Aneek","age":23,"gender":'M','avgBudget':"1",'avgDuration':"6","tags":["lakes","museum","pubs"]}
+updated_json = {'user_id':'5ca69d6f6eef607efc321f5c','avgBudget':"1",'avgDuration':"6"}
+updated_categories_json = {'user_id':'5ca69d6f6eef607efc321f5c','avgBudget':"1",'avgDuration':"6","tags":["lake"]}
 #5ca69a816eef607efc321f48
 if(is_first):
-    service.plan_trip(json.dumps(user_json))
+    a,b = service.plan_trip(json.dumps(user_json))
+    print("user id",a)
+    print("places",b)
 else:
-    service.plan_trip(json.dumps(updated_json))
+    service.plan_trip(json.dumps(updated_categories_json))

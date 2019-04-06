@@ -2,3 +2,5 @@ UI/node_modules/.bin/atob
 UI/node_modules/.bin/acorn
 UI/node_modules/
 code/ui/node_modules/
+
+/D:/debrup/TCD/Adaptive_Application/shared/AdaptiveApplication/POC/scratchbook/python/__pycache__/*

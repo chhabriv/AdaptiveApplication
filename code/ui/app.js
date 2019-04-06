@@ -61,7 +61,8 @@ document.getElementById ("Mary").addEventListener ("click", function(){
   var axiosConfig = {
     headers: {
       'Content-Type': 'application/json',
-      'accept': '*/*',
+      //'accept': '*/*',
+      //'Access-Control-Allow-Origin': '*',
     }
   };
   const ax = require('axios');
@@ -153,9 +154,6 @@ function getNextRoute(){
     });
   }
 
-var startMarker;
-var destMarker;
-var prevPolyline = []
 
 function drawPolyline(jsonData){
     if (startMarker) {

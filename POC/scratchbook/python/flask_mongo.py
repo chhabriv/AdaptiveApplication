@@ -62,7 +62,7 @@ if __name__ == '__main__':
 	#db = client[db_name]
 	#conn = MongoConnection()
 	#MongoConnection._init_(app)
-	handler = RotatingFileHandler('dummy.log', maxBytes=10000, backupCount=1)
+	handler = RotatingFileHandler('dummy.log', maxBytes=1000000, backupCount=1)
 	#handler.setLevel(logging.INFO)
 	logging.getLogger(__name__).setLevel(logging.INFO)
 	logging.getLogger(__name__).addHandler(handler)
