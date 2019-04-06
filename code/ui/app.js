@@ -7,6 +7,10 @@ var map = L.map('map', {
   scrollWheelZoom: true
 });
 
+//var backendUrl = "http://localhost:5000/suggest"
+var backendUrl = "http://localhost:3000/suggest"
+
+
 // Set the position and zoom level of the map
 map.setView([53.353645, -6.371059], 13);
 
@@ -23,7 +27,11 @@ var esri_WorldImagery = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{
 var latestData;
 var currentRoute = 0
 
-document.getElementById ("startBtn").addEventListener ("click", test);
+document.getElementById ("startBtn").addEventListener ("click", function(){
+
+  currentRoute = 0;
+  getNextRoute()
+});
 
 
 document.getElementById ("newUser").addEventListener ("click", function(){
@@ -48,9 +56,8 @@ document.getElementById ("Mary").addEventListener ("click", function(){
   returnJson.avgDuration = 6;
   returnJson.avgBudget = '1';
   returnJson = JSON.stringify(returnJson);
+  currentRoute = 0;
   console.log(returnJson);
-  alert(returnJson);
-  alert('hdgy');
   var axiosConfig = {
     headers: {
       'Content-Type': 'application/json',
@@ -59,11 +66,32 @@ document.getElementById ("Mary").addEventListener ("click", function(){
   };
   const ax = require('axios');
 
-  ax.post('http://localhost:5000/suggest', returnJson, axiosConfig).then(resp => {
+  //ax.post(backendUrl, returnJson, axiosConfig).then(resp => {
+  ax.get(backendUrl, axiosConfig).then(resp => {
     console.log(resp.data['places']);
     latestData = resp.data['places']
 
+    var Start = new Object()
+    var geoLoc = new Object()
+    geoLoc.latitude = 53.338764
+    geoLoc.longitude = -6.256116
+    Start.geoLocation = geoLoc
 
+    var hours = new Object()
+    hours.closing = 2359
+    hours.opening = 800
+    Start.hours = hours
+
+    var bestTimeToVisit = new Object()
+    bestTimeToVisit.day = "N/A"
+    bestTimeToVisit.season = "N/A"
+    Start.bestTimeToVisit = bestTimeToVisit
+
+    Start.name = "Your hotel - The Shelbourne"
+    Start.review = 5.0
+    duration = 0
+
+    latestData.unshift(Start)
     getNextRoute()
   }).catch(error => {
     console.log(error);
@@ -80,19 +108,11 @@ function getNextRoute(){
   var lat = latestData[currentRoute]['geoLocation']['latitude']
   var lng = latestData[currentRoute]['geoLocation']['longitude']
 
-  var start;
-  var dest;
-
-  if(currentRoute == 0){
-    start = "Dublin"
-    dest = lat+","+lng
-  }
-  else{
-    start = lat+","+lng
-    dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
-  }
+  start = lat+","+lng
+  dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
 
 
+  console.log(latestData[currentRoute])
   getRoute(start, dest)
   currentRoute +=1
 }
@@ -167,12 +187,18 @@ function drawPolyline(jsonData){
               var destMarkerLatLng = [steps[steps.length-1]['end_location']['lat'],steps[steps.length-1]['end_location']['lng']]
 
 
-              startMarker = L.marker([startMarkerLatLng[0], startMarkerLatLng[1]])
-              destMarker = L.marker([destMarkerLatLng[0], destMarkerLatLng[1]])
-              markerGroup.addLayer(startMarker);
-              markerGroup.addLayer(destMarker);
-              map.addLayer(markerGroup);
-
+              startMarker = L.marker([startMarkerLatLng[0], startMarkerLatLng[1]]).addTo(map).on('click', function(e){
+                alert("Clicked start..")
+                console.log(latestData)
+              });
+              destMarker = L.marker([destMarkerLatLng[0], destMarkerLatLng[1]]).addTo(map).on('click', function(e){
+                var current = latestData[currentRoute]
+                console.log(current)
+                alert(current.name+"\n\n"
+                      +"Category: "+current.category+"\n"
+                      +"Duration: "+current.duration+" minutes \n"
+                      +"Review: "+current.review+"/5")
+              });
               steps.forEach(function(step){
                 var polyline = step['polyline']['points']
                 var coordinates = polyUtil.decode(polyline);
@@ -192,7 +218,7 @@ function drawPolyline(jsonData){
             })
       })
   }
-
+/*
 function test(){
     var url = "http://localhost:5000/1"
   const http = require('http')
@@ -215,7 +241,7 @@ function test(){
       }).on("error", (err) => {
         console.log("Error: " + err.message);
       });
-}
+}*/
 
 
   function handleResponse(data){
