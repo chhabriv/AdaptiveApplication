@@ -32,6 +32,8 @@ var requestData = ""
 
 document.getElementById ("startBtn").addEventListener ("click", function(){
   requestData = window.localStorage.getItem("data")
+  alert(requestData)
+  localStorage.removeItem("data");
   currentRoute = 0;
 
   const ax = require('axios');
@@ -417,26 +419,31 @@ function setPrefOld() {
   returnJson.user_id = returnUserId;
   returnJson.name = '';
   returnJson.tags = getPre();
-  returnJson.age = '';
+  returnJson.age = 0;
   returnJson.gender = '';
   returnJson.avgDuration = getDuration();
   returnJson.avgBudget = getBudget();
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
-  const ax = require('axios');
-  var axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      'accept': '*/*',
-    }
-  };
-  ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
-    console.log(resp);
-    //returnUserId = JSON.parse(resp)['user_id'];
-    latestData = JSON.parse(resp)['places'];
 
-  }).catch(error => {
-    console.log(error);
-  });
+  setPrefNewResult = returnJson
+  console.log("returning: "+returnJson);
+  window.localStorage.setItem("data", returnJson)
+
+  // const ax = require('axios');
+  // var axiosConfig = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'accept': '*/*',
+  //   }
+  // };
+  // ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
+  //   console.log(resp);
+  //   //returnUserId = JSON.parse(resp)['user_id'];
+  //   latestData = JSON.parse(resp)['places'];
+  //
+  // }).catch(error => {
+  //   console.log(error);
+  // });
 
 }
