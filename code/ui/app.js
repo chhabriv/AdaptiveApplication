@@ -27,11 +27,33 @@ var esri_WorldImagery = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{
 
 var latestData;
 var currentRoute = 0
+var requestData = ""
+
 
 document.getElementById ("startBtn").addEventListener ("click", function(){
-
+  requestData = window.localStorage.getItem("data")
   currentRoute = 0;
-  getNextRoute()
+
+  const ax = require('axios');
+  var axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'accept': '*/*',
+    }
+  };
+  console.log("Sending post.........")
+  ax.post('http://localhost:5000/suggest', requestData, axiosConfig).then(resp => {
+    console.log(resp)
+    resp = resp.data
+    console.log(resp)
+    returnUserId = resp.user_id;
+    alert(returnUserId);
+    latestData = resp.places;
+    getNextRoute()
+
+  }).catch(error => {
+    console.log(error);
+  });
 });
 
 
@@ -282,13 +304,11 @@ function getUserId() {
 
 function getUsername() {
   var username = document.getElementById("Username").value;
-  alert(username);
   return username;
 }
 
 function getDuration() {
   var duration = document.getElementById("Duration").value;
-  alert(duration);
   return duration;
 }
 
@@ -299,13 +319,11 @@ function getAge() {
 
 function getGender() {
   var gender = document.getElementById("Gender").value;
-  alert(gender);
   return gender;
 }
 
 function getBudget() {
   var tmp = document.getElementById("Budget").value;
-  alert(tmp)
   var budget = 99;
   switch (tmp) {
     case '$':
@@ -320,7 +338,6 @@ function getBudget() {
     default:
       break;
   }
-  alert(budget);
   return budget;
 }
 
@@ -379,6 +396,7 @@ function getPre() {
 }
 
 function setPrefNew() {
+  console.log("in setpref new....")
   var returnJson = new Object();
   returnJson.user_id = '';
   returnJson.name = getUsername();
@@ -388,25 +406,10 @@ function setPrefNew() {
   returnJson.avgDuration = getDuration();
   returnJson.avgBudget = getBudget();
   returnJson = JSON.stringify(returnJson);
-  console.log(returnJson);
-  alert('hdgy');
-  const ax = require('axios');
-  var axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      'accept': '*/*',
-    }
-  };
-  ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
-    console.log(resp);
-    returnUserId = JSON.parse(resp)['user_id'];
-    alert(returnUserId);
-    latestData = JSON.parse(resp)['places'];
 
-  }).catch(error => {
-    console.log(error);
-  });
-
+  setPrefNewResult = returnJson
+  console.log("returning: "+returnJson);
+  window.localStorage.setItem("data", returnJson)
 }
 
 function setPrefOld() {
@@ -420,7 +423,6 @@ function setPrefOld() {
   returnJson.avgBudget = getBudget();
   returnJson = JSON.stringify(returnJson);
   console.log(returnJson);
-  alert('hdgy');
   const ax = require('axios');
   var axiosConfig = {
     headers: {
