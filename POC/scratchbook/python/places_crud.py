@@ -11,7 +11,7 @@ import random
 import json
 from flask import current_app
 
-PLACES_DB_ = 'places_v2'
+PLACES_DB_ = 'places'
 
 def fetchPlacesbyCategoriesDuration(categories,duration):
     catArr = categories.lower().split(",")

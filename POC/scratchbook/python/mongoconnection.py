@@ -12,7 +12,7 @@ class MongoConnection():
     db = client["adaptive"]
     
     def getPlacesCollection(self):
-        placeColl = MongoConnection.db['places_v2']
+        placeColl = MongoConnection.db['places']
         return placeColl
     
     def getUsersCollection(self):
