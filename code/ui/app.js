@@ -50,6 +50,28 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     returnUserId = resp.user_id;
     alert(returnUserId);
     latestData = resp.places;
+
+    var Start = new Object()
+    var geoLoc = new Object()
+    geoLoc.latitude = 53.428049
+    geoLoc.longitude = -6.224406
+    Start.geoLocation = geoLoc
+
+    var hours = new Object()
+    hours.closing = 2359
+    hours.opening = 800
+    Start.hours = hours
+
+    var bestTimeToVisit = new Object()
+    bestTimeToVisit.day = "N/A"
+    bestTimeToVisit.season = "N/A"
+    Start.bestTimeToVisit = bestTimeToVisit
+
+    Start.name = "Your hotel - The Shelbourne"
+    Start.review = 5.0
+    duration = 0
+
+    latestData.unshift(Start)
     getNextRoute()
 
   }).catch(error => {
@@ -128,12 +150,8 @@ document.getElementById ("Mary").addEventListener ("click", function(){
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
-
 function getNextRoute(){
-  var lat = latestData[currentRoute]['geoLocation']['latitude']
-  var lng = latestData[currentRoute]['geoLocation']['longitude']
-
-  start = lat+","+lng
+  start = latestData[currentRoute]['geoLocation']['latitude']+","+latestData[currentRoute]['geoLocation']['longitude']
   dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
 
 
