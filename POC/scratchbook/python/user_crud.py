@@ -114,7 +114,7 @@ def fetchCategoryWeightsForSimilarUsers(age,gender,avgBudget,avgDuration):
 
 
     match_query = {"$match":{"age":{"$gte":age-5,"$lte":age+5},"gender":gender,
-                             "avgBudget":avgBudget,"avgDuration":avgDuration}}
+                             "avgBudget":str(avgBudget+1),"avgDuration":str(avgDuration)}}
     group_query = {"$group":{"_id":0,"landmark":{"$avg":"$categories.landmark"},
                              "nature":{"$avg":"$categories.nature"},
                              "restaurant":{"$avg":"$categories.restaurant"},

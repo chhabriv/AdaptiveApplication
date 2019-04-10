@@ -33,6 +33,7 @@ var requestData = ""
 document.getElementById ("startBtn").addEventListener ("click", function(){
   requestData = window.localStorage.getItem("data")
   localStorage.removeItem("data");
+
   currentRoute = 0;
 
   const ax = require('axios');
@@ -43,6 +44,7 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     }
   };
   console.log("Sending post.........")
+  console.log(requestData)
   ax.post('http://localhost:5000/suggest', requestData, axiosConfig).then(resp => {
     console.log(resp)
     resp = resp.data
@@ -79,74 +81,15 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
   });
 });
 
+document.getElementById ("restartBtn").addEventListener ("click", restartRoute);
 
-document.getElementById ("newUser").addEventListener ("click", function(){
-  console.log("~~~")
-  window.location.href = "/Registry"
-});
+function restartRoute(){
 
-document.getElementById ("existingUser").addEventListener ("click", function(){
-  console.log("~~~")
-  //test()
-  window.location.href = "/Login"
-});
+  currentRoute = 0
+  getNextRoute()
 
 
-document.getElementById ("Mary").addEventListener ("click", function(){
-  var returnJson = new Object();
-  returnJson.user_id = '';//need to fill in
-  returnJson.name = 'Mary';
-  returnJson.tags = ['food','pubs','nature'];
-  returnJson.age = 23;
-  returnJson.gender = 'F';
-  returnJson.avgDuration = 6;
-  returnJson.avgBudget = '1';
-  returnJson = JSON.stringify(returnJson);
-  currentRoute = 0;
-  console.log(returnJson);
-  var axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      //'accept': '*/*',
-      //'Access-Control-Allow-Origin': '*',
-    }
-  };
-  const ax = require('axios');
-
-  ax.post(backendUrl, returnJson, axiosConfig).then(resp => {
-  //ax.get(backendUrl, axiosConfig).then(resp => {
-    console.log(resp.data['places']);
-    latestData = resp.data['places']
-
-    var Start = new Object()
-    var geoLoc = new Object()
-    geoLoc.latitude = 53.338764
-    geoLoc.longitude = -6.256116
-    Start.geoLocation = geoLoc
-
-    var hours = new Object()
-    hours.closing = 2359
-    hours.opening = 800
-    Start.hours = hours
-
-    var bestTimeToVisit = new Object()
-    bestTimeToVisit.day = "N/A"
-    bestTimeToVisit.season = "N/A"
-    Start.bestTimeToVisit = bestTimeToVisit
-
-    Start.name = "Your hotel - The Shelbourne"
-    Start.review = 5.0
-    duration = 0
-
-    latestData.unshift(Start)
-    getNextRoute()
-  }).catch(error => {
-    console.log(error);
-  });
-});
-
-
-
+}
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
@@ -367,7 +310,7 @@ function getBudget() {
 }
 
 function getPre() {
-  var preference = ['', '', ''];
+  var preference = [];
   var inputTag = ['','',''];
   var tags = document.getElementById("tags");
   var i = 0;
@@ -417,7 +360,7 @@ function getPre() {
         preference[i] = "shoes";
         break;
       default:
-        preference[i] = "";
+        //preference[i] = "";
         break;
 
     }
