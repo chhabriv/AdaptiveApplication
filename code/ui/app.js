@@ -32,6 +32,7 @@ var requestData = ""
 
 document.getElementById ("startBtn").addEventListener ("click", function(){
   requestData = window.localStorage.getItem("data")
+  alert(requestData)
   localStorage.removeItem("data");
   currentRoute = 0;
 
@@ -50,6 +51,28 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     returnUserId = resp.user_id;
     alert(returnUserId);
     latestData = resp.places;
+
+    var Start = new Object()
+    var geoLoc = new Object()
+    geoLoc.latitude = 53.428049
+    geoLoc.longitude = -6.224406
+    Start.geoLocation = geoLoc
+
+    var hours = new Object()
+    hours.closing = 2359
+    hours.opening = 800
+    Start.hours = hours
+
+    var bestTimeToVisit = new Object()
+    bestTimeToVisit.day = "N/A"
+    bestTimeToVisit.season = "N/A"
+    Start.bestTimeToVisit = bestTimeToVisit
+
+    Start.name = "Your hotel - The Shelbourne"
+    Start.review = 5.0
+    duration = 0
+
+    latestData.unshift(Start)
     getNextRoute()
 
   }).catch(error => {
@@ -128,12 +151,8 @@ document.getElementById ("Mary").addEventListener ("click", function(){
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
-
 function getNextRoute(){
-  var lat = latestData[currentRoute]['geoLocation']['latitude']
-  var lng = latestData[currentRoute]['geoLocation']['longitude']
-
-  start = lat+","+lng
+  start = latestData[currentRoute]['geoLocation']['latitude']+","+latestData[currentRoute]['geoLocation']['longitude']
   dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
 
 
@@ -310,7 +329,6 @@ function getUsername() {
 
 function getDuration() {
   var duration = document.getElementById("Duration").value;
-  alert(duration);
   return duration;
 }
 
@@ -320,17 +338,12 @@ function getAge() {
 }
 
 function getGender() {
-  //alert("setting age");
   var gender = document.getElementById("Gender").value;
-  //alert(e);
-  //var gender = e.options[e.selectedIndex].value;
-  alert(gender);
   return gender;
 }
 
 function getBudget() {
   var tmp = document.getElementById("Budget").value;
-  //var tmp = e.options[e.selectedIndex].value;
   var budget = 99;
   switch (tmp) {
     case '$':
@@ -349,21 +362,15 @@ function getBudget() {
 }
 
 function getPre() {
-  var preference = ['', '', ''];
-  var inputTag = ['','',''];
-  var tags = document.getElementById("tags");
-  var i = 0;
-  for (var j = 0; j < 12; j ++){
-    if(tags.options[j].selected){
-      inputTag[i]=tags.options[j].value;
-      alert(inputTag[i]);
-      i ++;
-    }
-  }
-  for (i = 0; i < 3; i++) {
+  var preference = [];
+  var inputTag = [document.getElementById("tag1").value, document.getElementById("tag2").value, document.getElementById("tag3").value];
+
+  for (var i = 0; i < 3; i++) {
     switch (inputTag[i]) {
       case ('1'):
+        //alert(preference[i])
         preference[i] = "outdoor";
+        //alert(preference[i])
         break;
       case ('2'):
         preference[i] = "museum";
@@ -393,13 +400,13 @@ function getPre() {
         preference[i] = "styling";
         break;
       case ('11'):
-        preference[i] = "attire";
+        preference[i] = "sttire";
         break;
       case ('12'):
         preference[i] = "shoes";
         break;
       default:
-        preference[i] = "";
+        //preference[i] = "";
         break;
 
     }
@@ -409,16 +416,15 @@ function getPre() {
 }
 
 function setPrefNew() {
-  alert("in setpref new....")
+  console.log("in setpref new....")
   var returnJson = new Object();
   returnJson.user_id = '';
   returnJson.name = getUsername();
+  returnJson.tags = getPre();
   returnJson.age = getAge();
   returnJson.gender = getGender();
   returnJson.avgDuration = getDuration();
   returnJson.avgBudget = getBudget();
-  returnJson.tags = getPre();
-
   returnJson = JSON.stringify(returnJson);
 
   setPrefNewResult = returnJson
@@ -441,5 +447,21 @@ function setPrefOld() {
   setPrefNewResult = returnJson
   console.log("returning: "+returnJson);
   window.localStorage.setItem("data", returnJson)
+
+  // const ax = require('axios');
+  // var axiosConfig = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'accept': '*/*',
+  //   }
+  // };
+  // ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
+  //   console.log(resp);
+  //   //returnUserId = JSON.parse(resp)['user_id'];
+  //   latestData = JSON.parse(resp)['places'];
+  //
+  // }).catch(error => {
+  //   console.log(error);
+  // });
 
 }
