@@ -99,7 +99,7 @@ def limitPlacesByCategories(locations,category,limit):
 def fetchPlacesByCategoriesBudget(categories,budget):
     query = dict()
     query["category"] = { "$in": categories }
-    query["Price"] = {"$lte":20}
+    query["Price"] = {"$lte":budget}
     #print(query)
     dbConn = MongoConnection()
     places_coll = dbConn.getPlacesCollection()
