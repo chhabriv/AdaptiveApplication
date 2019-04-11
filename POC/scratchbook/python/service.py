@@ -156,7 +156,8 @@ def preferred_places(raw_places,cat_weights,duration):
         current_app.logger.info(avlbl_duration_category)
         #print("the available duration for ",aCat," is ",available_duration)
         validLocations.extend(limitPlacesByCategoryDuration(raw_places,aCat,available_duration))
-    return validLocations
+	
+    return shuffleList(validLocations)
         
 
 
@@ -178,6 +179,11 @@ def limitPlacesByCategoryDuration(locations,category_name,duration):
     #print(validLocations)
     return validLocations 
 
+
+def shuffleList(places):
+    random.shuffle(places)
+    return places
+	
 '''
 #Testing code below
 category_weights= tags_to_category(['shoes','movie','outdoor'])
