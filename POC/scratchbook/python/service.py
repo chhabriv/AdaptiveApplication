@@ -59,7 +59,7 @@ def plan_trip(user_json):
     else:
         retrieved_user=json.loads(retrieve_user(user_id))
         update_mongo=False
-        if (TAGS in user_received and user_received[TAGS] is not ''):
+        if (user_received[TAGS]):
             current_app.logger.info('Tags present so content filtering')
             current_category_weights=tags_to_category(user_received[TAGS])
             updated_weights=reccommender.contentFiltering(retrieved_user,current_category_weights)

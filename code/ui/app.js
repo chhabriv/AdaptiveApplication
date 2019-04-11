@@ -32,8 +32,8 @@ var requestData = ""
 
 document.getElementById ("startBtn").addEventListener ("click", function(){
   requestData = window.localStorage.getItem("data")
-  alert(requestData)
   localStorage.removeItem("data");
+
   currentRoute = 0;
 
   const ax = require('axios');
@@ -44,6 +44,7 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     }
   };
   console.log("Sending post.........")
+  console.log(requestData)
   ax.post('http://localhost:5000/suggest', requestData, axiosConfig).then(resp => {
     console.log(resp)
     resp = resp.data
@@ -51,56 +52,11 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     returnUserId = resp.user_id;
     alert(returnUserId);
     latestData = resp.places;
-    getNextRoute()
-
-  }).catch(error => {
-    console.log(error);
-  });
-});
-
-
-document.getElementById ("newUser").addEventListener ("click", function(){
-  console.log("~~~")
-  window.location.href = "/Registry"
-});
-
-document.getElementById ("existingUser").addEventListener ("click", function(){
-  console.log("~~~")
-  //test()
-  window.location.href = "/Login"
-});
-
-
-document.getElementById ("Mary").addEventListener ("click", function(){
-  var returnJson = new Object();
-  returnJson.user_id = '';//need to fill in
-  returnJson.name = 'Mary';
-  returnJson.tags = ['food','pubs','nature'];
-  returnJson.age = 23;
-  returnJson.gender = 'F';
-  returnJson.avgDuration = 6;
-  returnJson.avgBudget = '1';
-  returnJson = JSON.stringify(returnJson);
-  currentRoute = 0;
-  console.log(returnJson);
-  var axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      //'accept': '*/*',
-      //'Access-Control-Allow-Origin': '*',
-    }
-  };
-  const ax = require('axios');
-
-  ax.post(backendUrl, returnJson, axiosConfig).then(resp => {
-  //ax.get(backendUrl, axiosConfig).then(resp => {
-    console.log(resp.data['places']);
-    latestData = resp.data['places']
 
     var Start = new Object()
     var geoLoc = new Object()
-    geoLoc.latitude = 53.338764
-    geoLoc.longitude = -6.256116
+    geoLoc.latitude = 53.428049
+    geoLoc.longitude = -6.224406
     Start.geoLocation = geoLoc
 
     var hours = new Object()
@@ -119,22 +75,26 @@ document.getElementById ("Mary").addEventListener ("click", function(){
 
     latestData.unshift(Start)
     getNextRoute()
+
   }).catch(error => {
     console.log(error);
   });
 });
 
+document.getElementById ("restartBtn").addEventListener ("click", restartRoute);
+
+function restartRoute(){
+
+  currentRoute = 0
+  getNextRoute()
 
 
+}
 
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
-
 function getNextRoute(){
-  var lat = latestData[currentRoute]['geoLocation']['latitude']
-  var lng = latestData[currentRoute]['geoLocation']['longitude']
-
-  start = lat+","+lng
+  start = latestData[currentRoute]['geoLocation']['latitude']+","+latestData[currentRoute]['geoLocation']['longitude']
   dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
 
 
@@ -311,6 +271,7 @@ function getUsername() {
 
 function getDuration() {
   var duration = document.getElementById("Duration").value;
+  alert(duration);
   return duration;
 }
 
@@ -320,12 +281,17 @@ function getAge() {
 }
 
 function getGender() {
+  //alert("setting age");
   var gender = document.getElementById("Gender").value;
+  //alert(e);
+  //var gender = e.options[e.selectedIndex].value;
+  alert(gender);
   return gender;
 }
 
 function getBudget() {
   var tmp = document.getElementById("Budget").value;
+  //var tmp = e.options[e.selectedIndex].value;
   var budget = 99;
   switch (tmp) {
     case '$':
@@ -344,15 +310,21 @@ function getBudget() {
 }
 
 function getPre() {
-  var preference = ['', '', ''];
-  var inputTag = [document.getElementById("tag1").value, document.getElementById("tag2").value, document.getElementById("tag3").value];
-
-  for (var i = 0; i < 3; i++) {
+  var preference = [];
+  var inputTag = ['','',''];
+  var tags = document.getElementById("tags");
+  var i = 0;
+  for (var j = 0; j < 12; j ++){
+    if(tags.options[j].selected){
+      inputTag[i]=tags.options[j].value;
+      alert(inputTag[i]);
+      i ++;
+    }
+  }
+  for (i = 0; i < 3; i++) {
     switch (inputTag[i]) {
       case ('1'):
-        //alert(preference[i])
         preference[i] = "outdoor";
-        //alert(preference[i])
         break;
       case ('2'):
         preference[i] = "museum";
@@ -382,7 +354,7 @@ function getPre() {
         preference[i] = "styling";
         break;
       case ('11'):
-        preference[i] = "sttire";
+        preference[i] = "attire";
         break;
       case ('12'):
         preference[i] = "shoes";
@@ -398,15 +370,16 @@ function getPre() {
 }
 
 function setPrefNew() {
-  console.log("in setpref new....")
+  alert("in setpref new....")
   var returnJson = new Object();
   returnJson.user_id = '';
   returnJson.name = getUsername();
-  returnJson.tags = getPre();
   returnJson.age = getAge();
   returnJson.gender = getGender();
   returnJson.avgDuration = getDuration();
   returnJson.avgBudget = getBudget();
+  returnJson.tags = getPre();
+
   returnJson = JSON.stringify(returnJson);
 
   setPrefNewResult = returnJson
@@ -416,7 +389,7 @@ function setPrefNew() {
 
 function setPrefOld() {
   var returnJson = new Object();
-  returnJson.user_id = returnUserId;
+  returnJson.user_id = getUserId();
   returnJson.name = '';
   returnJson.tags = getPre();
   returnJson.age = 0;
@@ -429,21 +402,5 @@ function setPrefOld() {
   setPrefNewResult = returnJson
   console.log("returning: "+returnJson);
   window.localStorage.setItem("data", returnJson)
-
-  // const ax = require('axios');
-  // var axiosConfig = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'accept': '*/*',
-  //   }
-  // };
-  // ax.post('127.0.0.1:5000/suggest', returnJson, axiosConfig).then(resp => {
-  //   console.log(resp);
-  //   //returnUserId = JSON.parse(resp)['user_id'];
-  //   latestData = JSON.parse(resp)['places'];
-  //
-  // }).catch(error => {
-  //   console.log(error);
-  // });
 
 }
