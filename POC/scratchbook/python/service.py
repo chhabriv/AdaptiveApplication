@@ -99,7 +99,7 @@ def process_input(user_received):
         else:
             print("ERROR, NEW USER MUST HAVE TAGS")
         user_object=None
-        user_object=dto.user(
+        user_object=dto.users(
                             name=user_received[NAME],
                             age=user_received[AGE],
                             gender=user_received[GENDER],
@@ -107,7 +107,7 @@ def process_input(user_received):
                             categories=category_weights,
                             avgDuration=user_received[DURATION]
                         )
-        #print('user object model -- ',user_object)
+        current_app.logger.info(user_object)
         return user_object
         
 def tags_to_category(tags):
@@ -166,6 +166,9 @@ def preferred_places(raw_places,cat_weights,duration):
 def limitPlacesByCategoryDuration(locations,category_name,duration):
     validLocations= []
     currDuration = 0
+    allowable_duration = duration + 20
+    current_app.logger.info(category_name)
+    current_app.logger.info(allowable_duration)
     if(duration==currDuration):
         return validLocations
     #print(places.count())
@@ -173,11 +176,12 @@ def limitPlacesByCategoryDuration(locations,category_name,duration):
         #print(aLoc['name'],aLoc['duration'])
         if(aLoc['category']==category_name):
             #print(aLoc['name'],aLoc['duration'])
-            if((currDuration + aLoc['duration']) <= duration):
+            if((currDuration + aLoc['duration']) <= allowable_duration):
                 currDuration += aLoc['duration']
                 #data = aLoc['name'] +"--"+ str(aLoc['duration'])
                 validLocations.append(aLoc)
-    #print(validLocations)
+    
+    current_app.logger.info(validLocations)
     return validLocations 
 
 

@@ -9,10 +9,10 @@ from mongoengine import *
 from mongoconnection import MongoConnection
 import json
 
-DBNAME='mongoengine_test'
+DBNAME='adaptive'
 connect(DBNAME)
     
-class user(Document):
+class users(Document):
     name = StringField(required=True, max_length=15)
     age = IntField(required=True, max_length=2)
     gender = StringField(required=True, max_length=6)    

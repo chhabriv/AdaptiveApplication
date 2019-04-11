@@ -19,10 +19,11 @@ def insert_user(user):
     return user.save()
 
 def retrieve_user(user_id):
-    return dto.user.objects.get(id=user_id)
+    return dto.users.objects.get(id=user_id)
 
-def update_user(user_id,weight,new_budget,new_duration):
-    return dto.user.objects(id=user_id).update(
+def update_user(user_id,weight,new_duration,new_budget):
+	
+    return dto.users.objects(id=user_id).update(
             categories=weight,
             avgDuration=new_duration,
             avgBudget=new_budget)

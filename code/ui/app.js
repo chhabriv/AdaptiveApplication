@@ -50,7 +50,6 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     resp = resp.data
     console.log(resp)
     returnUserId = resp.user_id;
-    alert(returnUserId);
     latestData = resp.places;
 
     var Start = new Object()
@@ -69,43 +68,71 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     bestTimeToVisit.season = "N/A"
     Start.bestTimeToVisit = bestTimeToVisit
 
-    Start.name = "Your hotel - The Shelbourne"
+    Start.name = "Dublin Airport"
     Start.review = 5.0
+    Start.category = "Start"
     duration = 0
 
     latestData.unshift(Start)
-    getNextRoute()
+    getNextRoute(true)
 
   }).catch(error => {
     console.log(error);
   });
 });
 
+
 document.getElementById ("restartBtn").addEventListener ("click", restartRoute);
+document.getElementById ("showPlan").addEventListener ("click", function(){
+
+  var counter = 1
+  var output = ""
+  for(elem in latestData){
+    var temp = latestData[elem]
+    console.log(temp)
+    output += counter+". "+temp.category + " : "+temp.name+"\n"
+    counter++
+  }
+
+  alert(output)
+
+});
 
 function restartRoute(){
 
   currentRoute = 0
-  getNextRoute()
+  getNextRoute(false)
 
 
 }
 
+document.getElementById ("startBtn2").addEventListener ("click", function(){
+  requestData = window.localStorage.getItem("data")
+  localStorage.removeItem("data");
+
+  currentRoute = 0;
+
+  for(var i =0; i < latestData.length-1; i++){
+    getNextRoute(true)
+  }
+});
+
+
 document.getElementById ("nextBtn").addEventListener ("click", getNextRoute);
 
-function getNextRoute(){
+function getNextRoute(isFirst){
   start = latestData[currentRoute]['geoLocation']['latitude']+","+latestData[currentRoute]['geoLocation']['longitude']
   dest = latestData[currentRoute+1]['geoLocation']['latitude']+","+latestData[currentRoute+1]['geoLocation']['longitude']
 
 
   console.log(latestData[currentRoute])
-  getRoute(start, dest)
+  getRoute(start, dest, isFirst)
   currentRoute +=1
 }
 
 
   //ToDo change method to take in starting lat/long and route to destination lat/long
-  function getRoute(start, destination){
+  function getRoute(start, destination, isFirst){
     if(start == ""){
       alert("Starting location cannot be empty!")
       return;
@@ -129,28 +156,31 @@ function getNextRoute(){
 
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
-        drawPolyline(JSON.parse(data))
+        drawPolyline(JSON.parse(data), isFirst)
       });
 
     }).on("error", (err) => {
       console.log("Error: " + err.message);
       console.log("Retrying...")
-      getRoute(start, destination)
+      getRoute(start, destination, isFirst)
     });
   }
 
   var startMarker;
   var destMarker;
+
+  let markerGroup = L.featureGroup()
   var prevPolyline = []
 
-function drawPolyline(jsonData){
-    if (startMarker) {
-      map.removeLayer(startMarker);
+function drawPolyline(jsonData, isFirst){
+
+    if(!isFirst){
+      if(markerGroup){
+        for(layer in markerGroup._layers){
+          map.removeLayer(markerGroup._layers[layer])
+        }
+      }
     }
-    if (destMarker) {
-      map.removeLayer(destMarker);
-    }
-    //console.log(prevPolyline)
     if (prevPolyline) {
       for(stepPolyline in prevPolyline){
         map.removeLayer(prevPolyline[stepPolyline]);
@@ -158,7 +188,6 @@ function drawPolyline(jsonData){
       prevPolyline = []
     }
 
-    let markerGroup = L.featureGroup()
 
       jsonData = jsonData['routes']
 
@@ -173,11 +202,10 @@ function drawPolyline(jsonData){
               var destMarkerLatLng = [steps[steps.length-1]['end_location']['lat'],steps[steps.length-1]['end_location']['lng']]
 
 
-              startMarker = L.marker([startMarkerLatLng[0], startMarkerLatLng[1]]).addTo(map).on('click', function(e){
-                alert("Clicked start..")
+              startMarker = L.marker([startMarkerLatLng[0], startMarkerLatLng[1]]).on('click', function(e){
                 console.log(latestData)
               });
-              destMarker = L.marker([destMarkerLatLng[0], destMarkerLatLng[1]]).addTo(map).on('click', function(e){
+              destMarker = L.marker([destMarkerLatLng[0], destMarkerLatLng[1]]).on('click', function(e){
                 var current = latestData[currentRoute]
                 console.log(current)
                 alert(current.name+"\n\n"
@@ -185,7 +213,17 @@ function drawPolyline(jsonData){
                       +"Duration: "+current.duration+" minutes \n"
                       +"Review: "+current.review+"/5")
               });
+              markerGroup.addLayer(startMarker)
+              markerGroup.addLayer(destMarker)
+              map.addLayer(markerGroup)
+
+              if(isFirst){
+                console.log("Returning..")
+                return;
+              }
               steps.forEach(function(step){
+                //console.log(step)
+
                 var polyline = step['polyline']['points']
                 var coordinates = polyUtil.decode(polyline);
 
@@ -271,7 +309,6 @@ function getUsername() {
 
 function getDuration() {
   var duration = document.getElementById("Duration").value;
-  alert(duration);
   return duration;
 }
 
@@ -281,11 +318,7 @@ function getAge() {
 }
 
 function getGender() {
-  //alert("setting age");
   var gender = document.getElementById("Gender").value;
-  //alert(e);
-  //var gender = e.options[e.selectedIndex].value;
-  alert(gender);
   return gender;
 }
 
@@ -317,7 +350,6 @@ function getPre() {
   for (var j = 0; j < 12; j ++){
     if(tags.options[j].selected){
       inputTag[i]=tags.options[j].value;
-      alert(inputTag[i]);
       i ++;
     }
   }
@@ -364,13 +396,11 @@ function getPre() {
         break;
 
     }
-    alert(preference[i])
   }
   return preference;
 }
 
 function setPrefNew() {
-  alert("in setpref new....")
   var returnJson = new Object();
   returnJson.user_id = '';
   returnJson.name = getUsername();

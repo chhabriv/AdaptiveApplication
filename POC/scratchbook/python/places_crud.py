@@ -11,7 +11,7 @@ import random
 import json
 from flask import current_app
 
-PLACES_DB_ = 'places_v2'
+PLACES_DB_ = 'place'
 
 def fetchPlacesbyCategoriesDuration(categories,duration):
     catArr = categories.lower().split(",")
@@ -97,13 +97,15 @@ def limitPlacesByCategories(locations,category,limit):
 
 
 def fetchPlacesByCategoriesBudget(categories,budget):
+    current_app.logger.info(categories)
+    current_app.logger.info(budget)
     query = dict()
     query["category"] = { "$in": categories }
     query["Price"] = {"$lte":budget}
     #print(query)
     dbConn = MongoConnection()
     places_coll = dbConn.getPlacesCollection()
-    
+    current_app.logger.info(query)
     places = places_coll.find(query,{"_id":0,"suitableAge":0,"location":0,"wayToGetThere":0})
     
     locations = []
