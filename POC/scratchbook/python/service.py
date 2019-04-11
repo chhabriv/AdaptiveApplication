@@ -12,6 +12,7 @@ import user_crud
 import reccommender
 import places_crud
 import logging
+import random
 from flask import current_app
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
