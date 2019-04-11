@@ -1,0 +1,70 @@
+{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "title": "Users",
+   "description": "A model of an user",
+   "type": "object",
+	
+   "properties": {
+	
+      "id": {
+         "description": "The unique identifier for an user",
+         "type": "ObjectId"
+      },
+		
+      "name": {
+         "description": "Name of the user",
+         "type": "string"
+      },
+		
+      "age": {
+		"description": "Age of the user",
+         "type": "number",
+         
+      },
+	  "gender": {
+		"description": "Gender of the user",
+         "type": "string",
+         
+      },
+	  "budget": {
+		"description": "The amount of money the user is willing to spend per trip",
+         "type": "string",
+         
+      },
+	  "duration": {
+		"description": "The amount of time the user is willing to spend per trip",
+         "type": "string",
+         
+      },
+	  "categories": {
+		"description": "Different categories the user likes to visit",
+         "type": "object",
+		 "properties":{
+			"landmark":{
+			"description":"Preferrence of the user towards landmarks and heritage sites"
+			"type":"number"
+			},
+			"nature":{
+			"description":"Preferrence of the user towards parks, outdoor activities"
+			"type":"number"
+			},
+			"shopping":{
+			"description":"Preferrence of the user towards shopping destinations"
+			"type":"number"
+			},
+			"restaurant":{
+			"description":"Preferrence of the user towards dining and night life"
+			"type":"number"
+			},
+			"theatre":{
+			"description":"Preferrence of the user towards theatre, plays"
+			"type":"number"
+			}
+         
+			}
+	  
+		}
+	},
+	
+   "required": ["id", "name", "age","gender","budget","duration","categories"]
+}
