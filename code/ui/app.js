@@ -52,6 +52,8 @@ document.getElementById ("startBtn").addEventListener ("click", function(){
     returnUserId = resp.user_id;
     latestData = resp.places;
 
+    alert(returnUserId)
+
     var Start = new Object()
     var geoLoc = new Object()
     geoLoc.latitude = 53.428049
@@ -174,13 +176,11 @@ function getNextRoute(isFirst){
 
 function drawPolyline(jsonData, isFirst){
 
-    if(!isFirst){
       if(markerGroup){
         for(layer in markerGroup._layers){
           map.removeLayer(markerGroup._layers[layer])
         }
       }
-    }
     if (prevPolyline) {
       for(stepPolyline in prevPolyline){
         map.removeLayer(prevPolyline[stepPolyline]);
@@ -217,10 +217,6 @@ function drawPolyline(jsonData, isFirst){
               markerGroup.addLayer(destMarker)
               map.addLayer(markerGroup)
 
-              if(isFirst){
-                console.log("Returning..")
-                return;
-              }
               steps.forEach(function(step){
                 //console.log(step)
 
